@@ -10,7 +10,7 @@
 
 此流程作业基于我们用户体验圈内熟知的双钻石模型，在[英国设计协会](https://www.designcouncil.org.uk/)的推动下得到广泛采用，在这种模型下，团队成员各自通过研究理解某个创意，接着集思广益明确挑战，各自分别制定设计草案，分享构思，决定最佳前进路线，最后进行测试和验证。
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/images/double-diamond.png "项目包括以下阶段：理解、定义、分散、决定、开发原型和验证")
+![](http://res.cloudinary.com/proteanbear/image/upload/v1509519752/WebFundamentals/double-diamond.jpg "项目包括以下阶段：理解、定义、分散、决定、开发原型和验证")
 
 英国设计协会开创的“双钻石”设计流程模型，其步骤涉及以下项目阶段：_理解_、_定义_、_分散_、_决定_、_开发原型_和_验证_。
 
@@ -46,7 +46,7 @@
 
 ### 与利益相关方进行内部面谈 {#_5}
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/images/stakeholder-interviews.jpg "与利益相关方进行面谈可能有益于发掘公司或团队一级的洞见。")
+![](http://res.cloudinary.com/proteanbear/image/upload/v1509519714/WebFundamentals/stakeholder-interviews.jpg "与利益相关方进行面谈可能有益于发掘公司或团队一级的洞见。")
 
 与利益相关方进行面谈可能有益于发掘公司或团队一级的洞见。
 
@@ -56,7 +56,7 @@
 
 ### 闪电演讲 {#_6}
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/images/lightning-talks.jpg "闪电演讲是一种持续时间很短（几分钟）的演讲。")
+![](http://res.cloudinary.com/proteanbear/image/upload/q_auto:good/v1509519711/WebFundamentals/lightning-talks.jpg "闪电演讲是一种持续时间很短（几分钟）的演讲。")
 
 闪电演讲是一种持续时间很短（几分钟）的演讲。
 
@@ -70,11 +70,9 @@
 
 ### 用户访谈 {#wzxhzdk14}
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/images/user-interviews.jpg "用户访谈对了解人员执行任何给定任务时的痛点都极为有效。")
+![](http://res.cloudinary.com/proteanbear/image/upload/q_auto:good/v1509519713/WebFundamentals/user-interviews.jpg "用户访谈对了解人员执行任何给定任务时的痛点都极为有效。")
 
 用户访谈对了解人员执行任何给定任务时的痛点都极为有效。
-
-
 
 这或许是了解用户的体验之旅、痛点以及流程的最佳途径。 至少安排五个用户访谈，如果可以联系到更多用户，可以增加访谈数量。 向他们提出的问题类型应包括：
 
@@ -92,7 +90,7 @@
 
 ### 人种学实地研究 {#_7}
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/images/field-interviews.jpg "观察用户在其自然环境中的行为对了解他们如何解决自己的挑战极有帮助。")
+![](http://res.cloudinary.com/proteanbear/image/upload/v1509519713/WebFundamentals/field-interviews.jpg "观察用户在其自然环境中的行为对了解他们如何解决自己的挑战极有帮助。")
 
 观察用户在其自然环境中的行为对了解他们如何解决自己的挑战极有帮助。
 
@@ -114,7 +112,7 @@
 
 最后，写下每个参与者达到其目标需要完成的步骤数量。 例如，对于“治疗畸形足的医生”，其目标将是“治疗畸形足患者”，因此需要的步骤可能是“在系统中登记患者”、“启动其医疗方案”、“创建其医疗健康的复查周期”以及“执行医疗程序”。
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/images/project-map.jpg "项目规划图对每个用户或参与者在流程中的主要步骤作出规划")
+![](http://res.cloudinary.com/proteanbear/image/upload/v1509520331/WebFundamentals/project-map.jpg "项目规划图对每个用户或参与者在流程中的主要步骤作出规划")
 
 项目规划图对每个用户或参与者在流程中的主要步骤作出规划。
 
@@ -130,9 +128,9 @@
 
 之后，您和团队的所有成员要向小组介绍自己的创意。每个人都必须详细地逐一说明其创意，以及他们为何选择沿特定道路前进。提醒每一位团队成员利用了解到的信息为其创意提供依据。 所有人介绍完毕后，便可就创意进行投票表决。 每个人都会获得两张便利贴，可投票表决任何创意。他们可以将两张选票都投给自己真正喜欢的某一个创意。
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/images/crazy-8s.jpg "疯狂的 8 可以非常有效地将您的所有创意落实到纸面上”。&amp;gt;&amp;lt;figcaption&amp;gt;疯狂的 8 可以非常有效地将您的所有创意落实到纸面上。&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&amp;lt;figure class=")
+![](http://res.cloudinary.com/proteanbear/image/upload/v1509519709/WebFundamentals/crazy-8s.jpg "疯狂的 8 可以非常有效地将您的所有创意落实到纸面上”。&amp;gt;&amp;lt;figcaption&amp;gt;疯狂的 8 可以非常有效地将您的所有创意落实到纸面上。&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&amp;lt;figure class=")
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/images/detailed-wireframe.jpg "现在需要根据了解到的信息进行详细设计。")
+![](http://res.cloudinary.com/proteanbear/image/upload/v1509519713/WebFundamentals/detailed-wireframe.jpg "现在需要根据了解到的信息进行详细设计。")
 
 现在需要根据了解到的信息进行详细设计。
 
@@ -142,7 +140,7 @@
 
 ### 为创意制作串连图板 {#_12}
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/images/storyboard.jpg "串连图板涉及将草案和创意合并成一个全面的流程。")
+![](http://res.cloudinary.com/proteanbear/image/upload/v1509519711/WebFundamentals/storyboard.jpg "串连图板涉及将草案和创意合并成一个全面的流程。")
 
 串连图板涉及将草案和创意合并成一个全面的流程。
 
@@ -152,7 +150,7 @@
 
 创建原型的本质并不是为完美的代码段建模，而是创造出某种可令使用者相信的东西。 用来创建原型的工具因人而异。 一些人喜欢使用 Keynote 或 Powerpoint，因为它能迫使您思考流程而不是设计细节。 您可能需要投入时间学习使用 Balsamiq、Marvel 或 Framer 之类的工具，可以通过它们进行更多行为控制。无论使用什么工具，都要确保它能让您侧重于流程，并且具有真实感。 您需要以真人为对象测试原型，因此原型的可信度要尽可能高，但同时又不应需要数个工作周才能创建完毕。
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/images/prototyping.jpg "原型需要足够逼真才具有可信性")
+![](http://res.cloudinary.com/proteanbear/image/upload/q_75/v1509519716/WebFundamentals/prototyping.jpg "原型需要足够逼真才具有可信性")
 
 原型需要足够逼真才具有可信性。
 
@@ -162,7 +160,7 @@
 
 有现成的测试实验室当然好，即使没有，建立一个也并不困难，前提是切记要营造一个不使用户分心的舒适环境。测试通常需要用户和两名团队成员参与，其中一人做记录，另一人提问。 一种有效的方案是使用 Hangouts 之类的应用并记录用户的操作，如果希望其余团队成员从另一个房间观察，使用此方案同样很方便。对于我们这些应用开发者来说，亲眼见证自己设计的实测怪吓人的。这种体验可能既令人振作又发人深省。
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/images/usability-testing.jpg "串连图板涉及将所有草案和创意合并成一个全面的流程。")
+![](http://res.cloudinary.com/proteanbear/image/upload/q_75/v1509519715/WebFundamentals/usability-testing.jpg "串连图板涉及将所有草案和创意合并成一个全面的流程。")
 
 串连图板涉及将所有草案和创意合并成一个全面的流程。
 
@@ -193,6 +191,4 @@
 事先尽可能多地了解情况无比重要，否则您投入大量辛劳、时间和精力完成的工作可能并非正确的解决方案。
 
 现在，您应该已经通过本文对用户体验及其重要性有了基本的了解。不应将用户体验视为设计师或研究员的本职工作，它实际上是每个项目参与者的责任，因此我建议大家利用每一个机会参与项目。
-
-
 
