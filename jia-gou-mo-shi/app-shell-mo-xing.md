@@ -8,7 +8,7 @@ App“shell”是支持用户界面所需的最小的 HTML、CSS 和 JavaScript�
 
 对于使用包含大量 JavaScript 的架构的单页应用来说，App Shell 是一种常用方法。这种方法依赖渐进式缓存 Shell（使用[服务工作线程](https://developers.google.com/web/fundamentals/primers/service-worker/)）让应用运行。接下来，为使用 JavaScript 的每个页面加载动态内容。App Shell 非常适合用于在没有网络的情况下将一些初始 HTML 快速加载到屏幕上。
 
-![](https://developers.google.com/web/fundamentals/architecture/images/appshell.png "App Shell 架构")
+![](http://res.cloudinary.com/proteanbear/image/upload/v1509518631/appshell_eyzgbf.jpg)
 
 换个说法，App Shell 就类似于您在开发本机应用时需要向应用商店发布的一组代码。 它是 UI 的主干以及让您的应用成功起步所需的核心组件，但可能并不包含数据。
 
@@ -51,13 +51,9 @@ App Shell 可保证 UI 的本地化以及从 API 动态加载内容，但同时�
 
 构建您自己的应用，明确区分页面 Shell 和动态内容。 一般而言，您的应用应加载尽可能最简单的 Shell，但初始下载时应包含足够的有意义的页面内容。 确定每个数据来源的速度与数据新鲜度之间的正确平衡点。
 
-![](https://developers.google.com/web/fundamentals/architecture/images/wikipedia.jpg "App Shell 与内容缓存搭配使用的离线维基百科应用")
+![](http://res.cloudinary.com/proteanbear/image/upload/c_scale,w_900/v1509518632/wikipedia_znipd7.jpg)
 
-Jake Archibald 的
-
-[离线维基百科应用](https://wiki-offline.jakearchibald.com/wiki/Rick_and_Morty)
-
-就是使用 App Shell 模型的 PWA 好例子。它会在重复访问时即时加载，但同时使用 JS 动态抓取内容。系统随后会离线缓存此内容，以备以后访问。
+Jake Archibald 的[离线维基百科应用](https://wiki-offline.jakearchibald.com/wiki/Rick_and_Morty)就是使用 App Shell 模型的 PWA 好例子。它会在重复访问时即时加载，但同时使用 JS 动态抓取内容。系统随后会离线缓存此内容，以备以后访问。
 
 ### App Shell 的 HTML 示例 {#example-html-for-appshell}
 
@@ -71,310 +67,54 @@ Jake Archibald 的
 * 用于处理导航和 UI 逻辑的外部 JavaScript 文件 \(app.js\)，以及用于显示从服务器中检索的帖子并使用 IndexedDB 等存储机制将其存储在本地的代码。
 * 网络应用清单和用于启用离线功能的服务工作线程加载程序。
 
-```
-<
-!DOCTYPE html
->
-
-
-<
-html
->
-
-
-<
-head
->
-
-
-<
-meta
-charset
-=
-"utf-8"
->
-
-
-<
-title
->
-App Shell
-<
-/title
->
-
-
-<
-link
-rel
-=
-"manifest"
-href
-=
-"/manifest.json"
->
-
-
-<
-meta
-http-equiv
-=
-"X-UA-Compatible"
-content
-=
-"IE=edge"
->
-
-
-<
-meta
-name
-=
-"viewport"
-content
-=
-"width=device-width, initial-scale=1.0"
->
-
-
-<
-title
->
-App Shell
-<
-/title
->
-
-
-<
-link
-rel
-=
-"stylesheet"
-type
-=
-"text/css"
-href
-=
-"styles/inline.css"
->
-
-
-<
-/head
->
-
-
-
-
-<
-body
->
-
-
-<
-header
-class
-=
-"header"
->
-
-
-<
-h1
-class
-=
-"header__title"
->
-App Shell
-<
-/h1
->
-
-
-<
-/header
->
-
-
-
-
-<
-nav
-class
-=
-"nav"
->
-
-
-  ...
-
-
-<
-
-av
->
-
-
-
-
-<
-main
-class
-=
-"main"
->
-
-
-  ...
-
-
-<
-/main
->
-
-
-
-
-<
-div
-class
-=
-"dialog-container"
->
-
-
-  ...
-
-
-<
-/div
->
-
-
-
-
-<
-div
-class
-=
-"loader"
->
-
-
-<
-!-- Show a spinner or placeholders for content --
->
-
-
-<
-/div
->
-
-
-
-
-<
-script
-src
-=
-"app.js"
-async
->
-<
-/script
->
-
-
-<
-script
->
-
-
-if
-(
-'serviceWorker'
- in navigator
-)
-{
-
-
-    navigator
-.
-serviceWorker
-.
-register
-(
-'/sw.js'
-).
-then
-(
-function
-(
-registration
-)
-{
-
-
-// Registration was successful
-
-
-      console
-.
-log
-(
-'ServiceWorker registration successful with scope: '
-,
- registration
-.
-scope
-);
-
-
-}).
-catch
-(
-function
-(
-err
-)
-{
-
-
-// registration failed :(
-
-
-      console
-.
-log
-(
-'ServiceWorker registration failed: '
-,
- err
-);
-
-
-});
-
-
-}
-
-
-<
-/script
->
-
-
-<
-/body
->
-
-
-<
-/html
->
-
-
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>App Shell</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Shell</title>
+  <link rel="stylesheet" type="text/css" href="styles/inline.css">
+</head>
+
+<body>
+  <header class="header">
+    <h1 class="header__title">App Shell</h1>
+  </header>
+
+  <nav class="nav">
+  ...
+  </nav>
+
+  <main class="main">
+  ...
+  </main>
+
+  <div class="dialog-container">
+  ...
+  </div>
+
+  <div class="loader">
+    <!-- Show a spinner or placeholders for content -->
+  </div>
+
+  <script src="app.js" async></script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch(function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  }
+  </script>
+</body>
+</html>
 ```
 
 注：请参阅[https://app-shell.appspot.com/](https://app-shell.appspot.com/)，查看一个非常简单的、使用 App Shell 和内容服务器端渲染的 PWA 的真实演示。App Shell 可通过使用任意内容库或框架实现（如我们的[所有框架上的 Progressive Web App](https://www.youtube.com/watch?v=srdKq0DckXQ)讲座中所述）。您可以使用 Polymer \([Shop](https://shop.polymer-project.org/)\) 和 React （[ReactHN](https://github.com/insin/react-hn)、[iFixit](https://github.com/GoogleChrome/sw-precache/tree/master/app-shell-demo)）查看示例。
@@ -389,116 +129,27 @@ log
 
 以下是使用服务工作线程的`install`事件将 App Shell 中的静态资源缓存到[Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache)中的服务工作线程代码示例：
 
-```
-var
- cacheName 
-=
-'shell-content'
-;
+```js
+var cacheName = 'shell-content';
+var filesToCache = [
+  '/css/styles.css',
+  '/js/scripts.js',
+  '/images/logo.svg',
 
+  '/offline.html’,
 
-var
- filesToCache 
-=
-[
-
-
-'/css/styles.css'
-,
-
-
-'/js/scripts.js'
-,
-
-
-'/images/logo.svg'
-,
-
-
-
-
-'/offline.html’,
-
-
-
-
-  '
-/’,
-
-
+  '/’,
 ];
 
-
-
-
-self
-.
-addEventListener
-(
-'install'
-,
-function
-(
-e
-)
-{
-
-
-  console
-.
-log
-(
-'[ServiceWorker] Install'
-);
-
-
-  e
-.
-waitUntil
-(
-
-
-    caches
-.
-open
-(
-cacheName
-).
-then
-(
-function
-(
-cache
-)
-{
-
-
-      console
-.
-log
-(
-'[ServiceWorker] Caching app shell'
-);
-
-
-return
- cache
-.
-addAll
-(
-filesToCache
-);
-
-
-})
-
-
-);
-
-
+self.addEventListener('install', function(e) {
+  console.log('[ServiceWorker] Install');
+  e.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      console.log('[ServiceWorker] Caching app shell');
+      return cache.addAll(filesToCache);
+    })
+  );
 });
-
-
 ```
 
 #### 使用 sw-precache 缓存 App Shell {#sw-precache_app_shell}
@@ -507,84 +158,17 @@ sw-precache 生成的服务工作线程会缓存并提供您在构建过程中�
 
 以下是在[gulp](http://gulpjs.com/)构建过程中使用 sw-precache 的基本示例：
 
-```
-gulp
-.
-task
-(
-'generate-service-worker'
-,
-function
-(
-callback
-)
-{
+```js
+gulp.task('generate-service-worker', function(callback) {
+  var path = require('path');
+  var swPrecache = require('sw-precache');
+  var rootDir = 'app';
 
-
-var
- path 
-=
-require
-(
-'path'
-);
-
-
-var
- swPrecache 
-=
-require
-(
-'sw-precache'
-);
-
-
-var
- rootDir 
-=
-'app'
-;
-
-
-
-
-  swPrecache
-.
-write
-(
-path
-.
-join
-(
-rootDir
-,
-'service-worker.js'
-),
-{
-
-
-    staticFileGlobs
-:
-[
-rootDir 
-+
-'/**/*.{js,html,css,png,jpg,gif}'
-],
-
-
-    stripPrefix
-:
- rootDir
-
-
-},
- callback
-);
-
-
+  swPrecache.write(path.join(rootDir, 'service-worker.js'), {
+    staticFileGlobs: [rootDir + '/**/*.{js,html,css,png,jpg,gif}'],
+    stripPrefix: rootDir
+  }, callback);
 });
-
-
 ```
 
 如需了解有关静态资产缓存的详细信息，请参阅[使用 sw-precache 添加服务工作线程](https://codelabs.developers.google.com/codelabs/sw-precache/index.html?index=..%2F..%2Findex#0)代码实验室。
