@@ -2,8 +2,6 @@
 
 > 作者：PeteLePage
 
-
-
 Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/multiscreen/whitepaper-sitedesign.html?utm_source=web-fundamentals&utm_term=chrome&utm_content=ux-landing&utm_campaign=web-fundamentals)来回答这一问题。
 
 > 移动用户具有很强的目标导向。他们期望能够根据自身情况立即获得所需内容。
@@ -22,23 +20,17 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/hpnav-cta-good.png)
 
-**宜**
-
-：将用户所有最常见的任务安排在便于访问的位置。
+**宜**：将用户所有最常见的任务安排在便于访问的位置。
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/hpnav-cta-bad.png)
 
-**忌**
-
-：使用“了解详情”之类含糊的吸引注意力的元素浪费宝贵的首屏空间。
+**忌**：使用“了解详情”之类含糊的吸引注意力的元素浪费宝贵的首屏空间。
 
 ### 让菜单保持简短和亲切 {#_3}
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/hpnav-menus-good.png)
 
-**宜**
-
-：让菜单保持简短和亲切。
+**宜**：让菜单保持简短和亲切。
 
 移动用户没有耐心通过浏览冗长的选项列表查找自己需要的内容。 请重新组织您的菜单，在不牺牲易用性的情况下尽可能减少菜单项。
 
@@ -46,9 +38,7 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/hpnav-hp-good.png)
 
-**宜**
-
-：简化返回首页的操作。
+**宜**：简化返回首页的操作。
 
 用户期望在其点按移动页面左上角的徽标时能够返回首页，如果未提供该徽标或者徽标不起作用，会令他们感到失望。
 
@@ -58,15 +48,11 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/hpnav-promo-good.png)
 
-**宜**
-
-：推广信息应能轻松关闭，并且不应让用户在使用网站时分心。
+**宜**：推广信息应能轻松关闭，并且不应让用户在使用网站时分心。
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/hpnav-promo-bad.png)
 
-**忌**
-
-：插页广告（有时称作关门广告）常常令用户反感，让用户在使用网站时平添烦恼。
+**忌**：插页广告（有时称作关门广告）常常令用户反感，让用户在使用网站时平添烦恼。
 
 ## 网站搜索 {#_6}
 
@@ -78,15 +64,11 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/ss-search-good.jpg)
 
-**宜**
-
-：让搜索可见
+**宜**：让搜索可见
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/ss-search-bad.jpg)
 
-**忌**
-
-：将搜索隐藏在溢出菜单中
+**忌**：将搜索隐藏在溢出菜单中
 
 ### 确保网站搜索结果相关 {#_8}
 
@@ -94,15 +76,11 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/ss-relevant-good.png)
 
-**宜**
-
-：Macy's 只返回儿童商品。
+**宜**：Macy's 只返回儿童商品。
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/ss-relevant-bad.png)
 
-**忌**
-
-：返回任何包含儿童一词的商品的搜索结果。
+**忌**：返回任何包含儿童一词的商品的搜索结果。
 
 ### 实现过滤条件来缩小结果范围 {#_9}
 
@@ -110,23 +88,17 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/ss-filters-good.jpg)
 
-**宜**
-
-：为过滤提供便利。
+**宜**：为过滤提供便利。
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/ss-filters-bad.jpg)
 
-**忌**
-
-：隐藏过滤功能。
+**忌**：隐藏过滤功能。
 
 ### 引导用户获得更相关的网站搜索结果 {#_10}
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/ss-guide-good.png "Zappos 通过询问用户的寻找内容来对其进行引导。")
 
-**宜**
-
-：通过沿正确方向引导用户来帮助他们查找其要寻找的内容。
+**宜**：通过沿正确方向引导用户来帮助他们查找其要寻找的内容。
 
 对于具有多样化客户群的网站，请先提出几个问题，然后再呈现搜索框，并利用客户的回答作为搜索查询过滤条件来确保用户获得来自最相关客户群的结果。
 
@@ -140,23 +112,17 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/cc-gates-good.png)
 
-**宜**
-
-：允许用户在不登录的情况下浏览网站。
+**宜**：允许用户在不登录的情况下浏览网站。
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/cc-gates-bad.png)
 
-**忌**
-
-：在网站上过早提出登录或注册要求。
+**忌**：在网站上过早提出登录或注册要求。
 
 ### 让用户以访客身份购买 {#_13}
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/cc-purchase-guest-good.png)
 
-**宜**
-
-：允许用户使用访客帐号购物。
+**宜**：允许用户使用访客帐号购物。
 
 研究参与者对访客结账的看法是“方便”、“简单”、“轻松”和“快速”。 用户对购物时强制他们注册帐号的网站感到恼火，尤其是在注册帐号的好处并不明确的情况下。
 
@@ -172,9 +138,7 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/cc-other-device-good.png)
 
-**宜**
-
-：让用户能够方便地继续在其他设备上浏览或购物。
+**宜**：让用户能够方便地继续在其他设备上浏览或购物。
 
 用户经常想在其他设备上完成任务。例如，他们可能想在更大的屏幕上查看某个项目。 或者他们可能工作繁忙，需要稍后完成任务。 通过让用户能够[在社交网络上分享项目](https://developers.google.com/web/fundamentals/discovery-and-monetization/social-discovery/)，或允许用户直接在网站内通过电子邮件向自己发送链接，为这些客户之旅提供支持。
 
@@ -194,9 +158,7 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/forms-calendar-good.png)
 
-**宜**
-
-：尽可能使用日历小部件。
+**宜**：尽可能使用日历小部件。
 
 明确标示开始日期和结束日期。用户应不必单纯为了安排日期而离开网站去查看日历应用。
 
@@ -204,9 +166,7 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/forms-multipart-good.png)
 
-**宜**
-
-：尽可能预填充内容。
+**宜**：尽可能预填充内容。
 
 正确标示输入并实时验证输入。
 
@@ -232,9 +192,7 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/sw-make-images-expandable-good.png)
 
-**宜**
-
-：让产品图像可扩展并便于查看细节。
+**宜**：让产品图像可扩展并便于查看细节。
 
 零售客户期望网站允许其[查看产品的高分辨率特写](https://developers.google.com/web/fundamentals/design-and-ux/media/images#make-product-images-expandable)。研究参与者对无法查看所购买的产品感到失望。
 
@@ -242,9 +200,7 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/us-orientation.jpg)
 
-**宜**
-
-：告诉用户哪个方向效果最好。
+**宜**：告诉用户哪个方向效果最好。
 
 研究参与者往往一直使用同一屏幕方向，直至系统提示其进行切换。 同时采用横向和纵向设计，或鼓励用户切换至最佳方向。 确保即使用户忽略切换方向的建议，仍可完成您的重要行为召唤。
 
@@ -252,9 +208,7 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/sw-single-browser-good.png)
 
-**宜**
-
-：Macy's 通过在网站上提供优惠券将用户留在其网站上。
+**宜**：Macy's 通过在网站上提供优惠券将用户留在其网站上。
 
 用户可能难以在窗口之间切换，并且可能找不到返回网站的路径。 避免启动新窗口的行为召唤。识别任何可能导致用户离开您的网站的流程，并提供相应功能将他们留在您的网站上。例如，如果您接受优惠券，请直接在网站上提供，而不要让用户被迫前往其他网站寻找优惠。
 
@@ -268,15 +222,9 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/sw-navigation-good.png)
 
-**宜**
-
-：始终在手势操作时请求获取用户的位置。
+**宜**：始终在手势操作时请求获取用户的位置。
 
 ![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/sw-navigation-bad.png)
 
-**忌**
-
-：在网站加载首页时立即请求提供位置会导致不好的用户体验。
-
-
+**忌**：在网站加载首页时立即请求提供位置会导致不好的用户体验。
 
