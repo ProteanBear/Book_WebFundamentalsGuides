@@ -5,9 +5,12 @@
 * [1.架构模式](jia-gou-mo-shi.md)
   * [App Shell 模型](jia-gou-mo-shi/app-shell-mo-xing.md)
 * [2.设计与用户体验](she-ji-yu-yong-hu-ti-yan.md)
-  * [2.1.设计最佳的用户体验](she-ji-yu-yong-hu-ti-yan/she-ji-zui-jia-de-yong-hu-ti-yan.md)
+  * [2.1 设计最佳的用户体验](she-ji-yu-yong-hu-ti-yan/she-ji-zui-jia-de-yong-hu-ti-yan.md)
     * [用户体验基础知识](she-ji-yu-yong-hu-ti-yan/she-ji-zui-jia-de-yong-hu-ti-yan/ji-chu-zhi-shi.md)
     * [怎样才算出色的移动网站？](she-ji-yu-yong-hu-ti-yan/she-ji-zui-jia-de-yong-hu-ti-yan/zen-yang-cai-suan-chu-se-de-yi-dong-wang-zhan-ff1f.md)
+  * [2.2 无障碍功能](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng.md)
+  * 2.3 动画
+  * 2.4 响应用户界面
 * Integration&Engagement
 * 多媒体与虚拟现实
 * 性能
