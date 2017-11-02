@@ -1,5 +1,7 @@
 # 无障碍功能
 
+> \*图片未处理
+
 > 作者：Meggin Kearney、Dave Gash、Alice Boxhall、Rob Dodson
 
 本文是[Udacity 无障碍功能课程](https://www.udacity.com/course/web-accessibility--ud891)中所涉及部分内容的文字版本。但其并非视频课程的直接文字记录，而是旨在以课程原有内容为基础，对无障碍功能的原理和实践进行更简要的论述。
@@ -178,6 +180,4 @@ Victor Tsaran
 * [**样式设置**](https://developers.google.com/web/fundamentals/accessibility/accessible-styles)：我们将以视觉设计为例，了解一些能够让界面的视觉元素尽可能灵活合用的技巧。
 
 由于上述每一个主题都能构成一个完整的课程，因此我们不会对创建无障碍网站的每一个层面进行介绍， 而是会为您提供足够的入门信息，并为您推荐一些不错的资源，让您能够深入了解各主题的相关信息。
-
-
 
