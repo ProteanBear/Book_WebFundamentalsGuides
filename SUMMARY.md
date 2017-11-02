@@ -11,6 +11,7 @@
   * [2.2 无障碍功能](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng.md)
     * [概述](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/gai-shu.md)
     * [焦点](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/jiao-dian.md)
+      * [焦点简介](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/jiao-dian/jiao-dian-jian-jie.md)
     * 语义
     * 语义与ARIA
     * 可访问的样式
