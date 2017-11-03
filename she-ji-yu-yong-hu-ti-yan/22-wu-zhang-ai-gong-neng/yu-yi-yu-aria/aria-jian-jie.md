@@ -10,60 +10,20 @@
 
 在以下代码段中，我们使用列表项作为一种自定义复选框。CSS "checkbox" 类为元素提供了所需的视觉特性。
 
-```
-<
-li
-tabindex
-=
-"0"
-class
-=
-"checkbox"
-checked
->
-
-
-  Receive promotional offers
-
-
-<
-/li
->
-
-
+```html
+<li tabindex="0" class="checkbox" checked>
+  Receive promotional offers
+</li>
 ```
 
 尽管这适合视力正常的用户，屏幕阅读器却不会给予任何指示来说明该元素旨在作为复选框使用，因此弱视用户可能会完全错过该元素。
 
 如果使用 ARIA 属性，我们就可以为元素提供缺少的信息，以便屏幕阅读器能正确解读它。 我们在以上代码中添加了`role`和`aria-checked`属性，将该元素显式标识为一个复选框，并指定它在默认情况下处于选中状态。该列表项现在将添加到无障碍树中，屏幕阅读器将把它正确地报告为一个复选框。
 
-```
-<
-li
-tabindex
-=
-"0"
-class
-=
-"checkbox"
-role
-=
-"checkbox"
-checked
-aria-checked
-=
-"true"
->
-
-
-  Receive promotional offers
-
-
-<
-/li
->
-
-
+```html
+<li tabindex="0" class="checkbox" role="checkbox" checked aria-checked="true">
+  Receive promotional offers
+</li>
 ```
 
 注：我们将[稍后](https://developers.google.com/web/fundamentals/accessibility/semantics-aria/#what-can-aria-do)介绍 ARIA 属性列表以及它们的使用时机。
@@ -91,82 +51,26 @@ ARIA 通过更改和补充标准 DOM 无障碍树来发挥作用。
 ARIA 允许我们创建的小部件型元素通常无法通过普通 HTML 实现。
 
 * 例如，ARIA 可以添加只向辅助技术 API 公开的附加标签和说明文本。
- 
 
-```
-<
-button
-aria-label
-=
-"screen reader only label"
->
-<
-/button
->
-
-
+```html
+<button aria-label="screen reader only label"></button>
 ```
 
 * ARIA 表达的元素间语义关系能够扩展标准父项/子项联系，例如控制特定区域的自定义滚动条。
 
-```
-<
-div
-role
-=
-"scrollbar"
-aria-controls
-=
-"main"
->
-<
-/div
->
-
-
-<
-div
-id
-=
-"main"
->
-
-
+```html
+<div role="scrollbar" aria-controls="main"></div>
+<div id="main">
 . . .
-
-
-<
-/div
->
-
-
+</div>
 ```
 
 * 并且 ARIA 可以使页面的某些部分具有“实时性”，让它们在发生变化时立即通知辅助技术。
 
-```
-<
-div
-aria-live
-=
-"true"
->
-
-
-<
-span
->
-GOOG: $400
-<
-/span
->
-
-
-<
-/div
->
-
-
+```html
+<div aria-live="true">
+  <span>GOOG: $400</span>
+</div>
 ```
 
 ARIA 系统的其中一个核心层面是其_角色_集。在无障碍术语中，角色是指特定 UI 模式的简略指示器。我们可以通过任意 HTML 元素上的`role`属性使用 ARIA 提供的模式词汇表。
@@ -182,6 +86,4 @@ ARIA 系统的其中一个核心层面是其_角色_集。在无障碍术语中�
 不过，该规范非常深奥；一个更为浅显的入门读物是[ARIA 制作实践文档](https://www.w3.org/TR/wai-aria-practices-1.1/)，该文档探究了使用可用 ARIA 角色和属性的最佳做法。
 
 ARIA 还提供了可对 HTML5 中提供的选项进行扩展的地标角色。请参阅[地标角色设计模式](https://www.w3.org/TR/wai-aria-practices-1.1#kbd_layout_landmark_XHTML)规范，了解详细信息。
-
-
 

@@ -40,19 +40,8 @@
 
 可在 HTML 中通过许多方式构建该按钮；以下所示为其中一种方式。
 
-```
-<
-div
-class
-=
-"button-ish"
->
-Give me tacos
-<
-/div
->
-
-
+```html
+<div class="button-ish">Give me tacos</div>
 ```
 
 当我们不使用实际按钮元素时，屏幕阅读器无从知晓其读取的内容。 此外，我们还需要额外完成[添加 tabindex](https://developers.google.com/web/fundamentals/accessibility/focus/using-tabindex)的工作，以便只使用键盘的用户能够使用它，因为按照现有编码，它只能使用鼠标操作。
@@ -73,65 +62,19 @@ Give me tacos
 
 * 将 input 元素置于 label 元素内
 
-```
-<
-label
->
-
-
-<
-input
-type
-=
-"checkbox"
->
-Receive promotional offers?
-<
-/input
->
-
-
-<
-/label
->
-
-
+```html
+<label>
+  <input type="checkbox">Receive promotional offers?</input>
+</label>
 ```
 
 或
 
-* 使用 label 的
-  `for`
-  属性并引用元素的
-  `id`
+* 使用 label 的`for`属性并引用元素的`id`
 
-```
-<
-input
-id
-=
-"promo"
-type
-=
-"checkbox"
->
-<
-/input
->
-
-
-<
-label
-for
-=
-"promo"
->
-Receive promotional offers?
-<
-/label
->
-
-
+```html
+<input id="promo" type="checkbox"></input>
+<label for="promo">Receive promotional offers?</label>
 ```
 
 正确标示复选框后，屏幕阅读器便可报告元素角色为 checkbox，处于 checked 状态，名称为“Receive promotional offers?”。
@@ -139,6 +82,4 @@ Receive promotional offers?
 ![](https://developers.google.com/web/fundamentals/accessibility/semantics-builtin/imgs/promo-offers.png "VoiceOver 产生的显示复选框朗读标签的屏幕文本输出")
 
 成功：您实际上可以使用屏幕阅读器，通过按 Tab 键在页面上循环跳转并验证朗读的角色、状态和名称来找到关联不正确的标签。
-
-
 

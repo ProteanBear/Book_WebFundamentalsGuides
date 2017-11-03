@@ -22,15 +22,16 @@
     * [语义与ARIA](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-yu-aria.md)
       * [ARIA 简介](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-yu-aria/aria-jian-jie.md)
       * [ARIA 标签和关系](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-yu-aria/aria-biao-qian-he-guan-xi.md)
-    * 可访问的样式
-    * 如何进行无障碍评估
-    * 团队的无障碍努力
+      * [隐藏和更新内容](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-yu-aria/yin-cang-he-geng-xin-nei-rong.md)
+    * [可访问的样式](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/ke-fang-wen-de-yang-shi.md)
+    * [如何进行无障碍评估](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/ru-he-jin-xing-wu-zhang-ai-ping-gu.md)
+    * [团队的无障碍努力](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/tuan-dui-de-wu-zhang-ai-nu-li.md)
   * 2.3 动画
   * 2.4 响应用户界面
-* Integration&Engagement
-* 多媒体与虚拟现实
-* 性能
-* 安全
-* 相关技术
+* 3.Integration&Engagement
+* [4.多媒体与虚拟现实](duo-mei-ti-yu-xu-ni-xian-shi.md)
+* 5.性能
+* 6.安全
+* 7.相关技术
 * 附：词汇表
 

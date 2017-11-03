@@ -18,86 +18,26 @@
 
 大多数结构良好的网页均采用嵌套式标题级别，以指示内容块之中的父-子关系。[WebAIM 检查清单](http://webaim.org/standards/wcag/checklist)反复提及了这一方法。
 
-* [1.3.1](http://webaim.org/standards/wcag/checklist#sc1.3.1)
-  提到“使用语义标记来指定标题”
-* [2.4.1](http://webaim.org/standards/wcag/checklist#sc2.4.1)
-  提到可利用标题结构这种方法来绕过内容块
-* [2.4.6](http://webaim.org/standards/wcag/checklist#sc2.4.6)
-  阐述了一些关于编写有用标题的详情
-* [2.4.10](http://webaim.org/standards/wcag/checklist#sc2.4.10)
-  指出“视情况利用标题来指定各个内容区”
+* [1.3.1](http://webaim.org/standards/wcag/checklist#sc1.3.1) 提到“使用语义标记来指定标题”
+* [2.4.1](http://webaim.org/standards/wcag/checklist#sc2.4.1) 提到可利用标题结构这种方法来绕过内容块
+* [2.4.6](http://webaim.org/standards/wcag/checklist#sc2.4.6) 阐述了一些关于编写有用标题的详情
+* [2.4.10](http://webaim.org/standards/wcag/checklist#sc2.4.10) 指出“视情况利用标题来指定各个内容区”
 
 并非所有标题都要出现在屏幕上。例如，[维基百科](https://www.wikipedia.org/)采用的一种方法会刻意将一些标题置于屏幕之外，并明确限定_只有_屏幕阅读器以及其他辅助技术才能访问它们。
 
-```
-<
-style
->
+```html
+<style>
+  .sr-only {
+    position:absolute;
+    left:-10000px;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+  }
+</style>
 
-
-.
-sr-only 
-{
-
-
-position
-:
-absolute
-;
-
-
-left
-:-
-10000px
-;
-
-
-top
-:
-auto
-;
-
-
-width
-:
-1px
-;
-
-
-height
-:
-1px
-;
-
-
-overflow
-:
-hidden
-;
-
-
-}
-
-
-<
-/style
->
-
-
-
-
-<
-h2
-class
-=
-"sr-only"
->
-This heading is offscreen.
-<
-/h2
->
-
-
+<h2 class="sr-only">This heading is offscreen.</h2>
 ```
 
 注：WebAIM 网站在[这篇有关屏幕外内容的文章](http://webaim.org/techniques/css/invisiblecontent/)中对此方法做了详细阐述。
@@ -114,15 +54,9 @@ This heading is offscreen.
 
 仅当屏幕阅读器能找到链接并且链接文本有意义时，此功能才有用。 例如，以下这些常见模式会使链接变得难以找到。
 
-* 不带
-  `href`
-  属性的锚点标记。这些常用于单页面应用的链接目标会给屏幕阅读器造成困难。 您可以在
-  [这篇有关单页面应用的文章](http://neugierig.org/software/blog/2014/02/single-page-app-links.html)
-  中阅读到更多内容。
+* 不带`href`属性的锚点标记。这些常用于单页面应用的链接目标会给屏幕阅读器造成困难。 您可以在[这篇有关单页面应用的文章](http://neugierig.org/software/blog/2014/02/single-page-app-links.html)中阅读到更多内容。
 * 实现时包含链接的按钮。这些按钮会使屏幕阅读器将内容解读为链接，从而使按钮功能丧失。 在这些情况下，请将锚点标记替换为实际按钮，并对按钮进行相应的样式设置。
-* 用作链接内容的图像。有时屏幕阅读器无法使用某些必要的链接图像。 为保证向辅助技术正确公开链接，确保图像具有
-  `alt`
-  属性文本。
+* 用作链接内容的图像。有时屏幕阅读器无法使用某些必要的链接图像。 为保证向辅助技术正确公开链接，确保图像具有`alt`属性文本。
 
 还有一个问题是不良链接文本。“了解详情”或“点击此处”等可点击文本对链接的指向未提供任何相关语义信息。 请改用“了解有关自适应设计的详情”或“请参阅此 canvas 教程”，以帮助屏幕阅读器提供有关链接的有意义上下文。
 
@@ -137,6 +71,4 @@ This heading is offscreen.
 HTML5 引入的一些新元素有助于定义页面的语义结构，其中包括`header`、`footer`、`nav`、`article`、`section`、`main`以及`aside`。这些元素在页面中明确提供结构线索，不会强制进行任何内置样式设置（反正您都应使用 CSS 来完成）。
 
 语义结构元素可以取代多个重复性的`div`块，并提供了一种更加清晰、更具描述性的方式，能够同时为制作者和阅读器直观表达页面结构。
-
-
 

@@ -18,11 +18,11 @@ Google 和 AnswerLab 执行了一项[调查研究](https://www.google.com/think/
 
 通过[菜单](https://developers.google.com/web/fundamentals/design-and-ux/responsive/)或“首屏线以下空间”（网页中不向下滚动便无法看到的部分）提供二级任务。
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/hpnav-cta-good.png)
+![](http://res.cloudinary.com/proteanbear/image/upload/v1509609141/WebFundamentals/hpnav-cta-good-hl_zh-cn.png)
 
 **宜**：将用户所有最常见的任务安排在便于访问的位置。
 
-![](https://developers.google.com/web/fundamentals/design-and-ux/principles/images/hpnav-cta-bad.png)
+![](http://res.cloudinary.com/proteanbear/image/upload/v1509609141/WebFundamentals/hpnav-cta-bad-hl_zh-cn.png)
 
 **忌**：使用“了解详情”之类含糊的吸引注意力的元素浪费宝贵的首屏空间。
 

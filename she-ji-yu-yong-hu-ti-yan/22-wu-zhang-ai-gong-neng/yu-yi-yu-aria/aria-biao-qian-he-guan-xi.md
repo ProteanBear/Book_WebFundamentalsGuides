@@ -22,8 +22,7 @@ ARIA 提供了多种向元素添加标签和说明的机制。事实上，ARIA �
 
 这非常类似于使用`label`元素，但也存在一些关键区别。
 
-1. `aria-labelledby`
-   可以用于任何元素，而不仅仅是可标记元素。
+1. `aria-labelledby`可以用于任何元素，而不仅仅是可标记元素。
 2. `label`元素引用其标记的对象，但对于`aria-labelledby`来说，关系则相反 — 被标记的对象引用标记它的元素。
 
 3. 只有一个标签元素与可标记元素关联，但是`aria-labelledby`可以利用一组 IDREF 从多个元素构建标签。标签将按照 IDREF 的提供顺序串联。
@@ -67,6 +66,4 @@ ARIA 规范列出了[八个关系属性](https://www.w3.org/TR/wai-aria/states_a
 如果无法通过 DOM 中存在的元素确定集的大小（例如，使用延迟渲染避免在 DOM 中生成大的列表时），`aria-setsize`可以指定实际集大小，`aria-posinset`可以指定元素在集中的位置。例如，在一个可能包含 1000 个元素的集中，您可以指定特定元素的`aria-posinset`为 857（即使其在 DOM 中位于首位），然后使用动态 HTML 技术确保用户可以根据需要查看完整列表。
 
 ![](https://developers.google.com/web/fundamentals/accessibility/semantics-aria/imgs/aria-posinset.jpg "使用 aria-posinset 和 aria-setsize 在列表中建立关系")
-
-
 
