@@ -26,7 +26,11 @@
     * [可访问的样式](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/ke-fang-wen-de-yang-shi.md)
     * [如何进行无障碍评估](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/ru-he-jin-xing-wu-zhang-ai-ping-gu.md)
     * [团队的无障碍努力](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/tuan-dui-de-wu-zhang-ai-nu-li.md)
-  * 2.3 动画
+  * [2.3 动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua.md)
+    * [概述](she-ji-yu-yong-hu-ti-yan/23-dong-hua/gai-shu.md)
+    * [CSS动画 vs JavaScript动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua/cssdong-huavs-javascript-dong-hua.md)
+    * [缓动的基础知识](she-ji-yu-yong-hu-ti-yan/23-dong-hua/huan-dong-de-ji-chu-zhi-shi.md)
+    * [自定义缓动](she-ji-yu-yong-hu-ti-yan/23-dong-hua/zi-ding-yi-huan-dong.md)
   * 2.4 响应用户界面
 * 3.Integration&Engagement
 * [4.多媒体与虚拟现实](duo-mei-ti-yu-xu-ni-xian-shi.md)
