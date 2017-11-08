@@ -18,71 +18,20 @@
 
 * `document.exitFullscreen()`（目前在 Chrome、Firefox 和 IE 中添加前缀。 Firefox 改用`cancelFullScreen()`）：取消全屏模式。
 
-* `document.fullscreenElement`
-  （目前在 Chrome、Firefox 和 IE 中添加前缀）：如有任何元素处于全屏模式，返回 true。
+* `document.fullscreenElement`（目前在 Chrome、Firefox 和 IE 中添加前缀）：如有任何元素处于全屏模式，返回 true。
 
 注：您会注意到，在添加前缀的版本中，屏幕中“S”的大小写处理存在大量不一致的情况。 这很不雅观，但也正是实行中规范存在的问题。
 
 应用进入全屏模式时，无法再使用浏览器的 UI 控件。 这会改变用户与所提供体验的交互方式。 全屏模式下的浏览器没有 Forwards 和 Backwards 这样的标准导航控件，也没有 Refresh 按钮这样的出路。 必须迎合这种情境。 当浏览器进入全屏模式时，可以利用某些 CSS 选择器来帮助您改变网站的样式和呈现方式。
 
-```
-<
-button
-id
-=
-"goFS"
->
-Go fullscreen
-<
-/button
->
-
-
-<
-script
->
-
-
-var
- goFS 
-=
- document
-.
-getElementById
-(
-"goFS"
-);
-
-
-  goFS
-.
-addEventListener
-(
-"click"
-,
-function
-()
-{
-
-
-      document
-.
-body
-.
-requestFullscreen
-();
-
-
-},
-false
-);
-
-
-<
-/script
->
-
-
+```html
+<button id="goFS">Go fullscreen</button>
+<script>
+  var goFS = document.getElementById("goFS");
+  goFS.addEventListener("click", function() {
+      document.body.requestFullscreen();
+  }, false);
+</script>
 ```
 
 上例有点人为的痕迹；我将供应商前缀使用方面的复杂性全都隐藏了起来。
@@ -91,133 +40,21 @@ false
 
 实际代码要复杂得多。[Mozilla 创建了](https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Using_full_screen_mode)一个非常有用的脚本，您可以用它来切换全屏。 如您所见，与指定 API 相比，供应商前缀的情况更为复杂和繁琐。即便是以下略加简化的代码，看上去仍显复杂。
 
-```
-function
- toggleFullScreen
-()
-{
+```js
+function toggleFullScreen() {
+  var doc = window.document;
+  var docEl = doc.documentElement;
 
+  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
 
-var
- doc 
-=
- window
-.
-document
-;
-
-
-var
- docEl 
-=
- doc
-.
-documentElement
-;
-
-
-
-
-var
- requestFullScreen 
-=
- docEl
-.
-requestFullscreen 
-||
- docEl
-.
-mozRequestFullScreen 
-||
- docEl
-.
-webkitRequestFullScreen 
-||
- docEl
-.
-msRequestFullscreen
-;
-
-
-var
- cancelFullScreen 
-=
- doc
-.
-exitFullscreen 
-||
- doc
-.
-mozCancelFullScreen 
-||
- doc
-.
-webkitExitFullscreen 
-||
- doc
-.
-msExitFullscreen
-;
-
-
-
-
-if
-(!
-doc
-.
-fullscreenElement 
-&
-&
-!
-doc
-.
-mozFullScreenElement 
-&
-&
-!
-doc
-.
-webkitFullscreenElement 
-&
-&
-!
-doc
-.
-msFullscreenElement
-)
-{
-
-
-    requestFullScreen
-.
-call
-(
-docEl
-);
-
-
+  if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+    requestFullScreen.call(docEl);
+  }
+  else {
+    cancelFullScreen.call(doc);
+  }
 }
-
-
-else
-{
-
-
-    cancelFullScreen
-.
-call
-(
-doc
-);
-
-
-}
-
-
-}
-
-
 ```
 
 我们这些网络开发者痛恨复杂性。您可以使用的一个不错的高级抽象 API 是[Sindre Sorhus 的](http://sindresorhus.com/screenfull.js)Screenfull.js 模块，该模块将两个略有不同的 JS API 和供应商前缀统一成一个一致的 API。
@@ -238,306 +75,63 @@ doc
 
 要修复此问题，请使用 document 元素替代 body 元素：
 
-```
-document
-.
-documentElement
-.
-requestFullscreen
-();
-
-
+```js
+document.documentElement.requestFullscreen();
 ```
 
 ##### 让 video 元素进入全屏模式 {#video}
 
 让 video 元素进入全屏模式与让任何其他元素进入全屏模式的方法完全相同。 只需调用 video 元素上的`requestFullscreen`方法。
 
-```
-<
-video
-id
-=
-videoElement
->
-<
-/video
->
-
-
-<
-button
-id
-=
-"goFS"
->
-Go Fullscreen
-<
-/button
->
-
-
-<
-script
->
-
-
-var
- goFS 
-=
- document
-.
-getElementById
-(
-"goFS"
-);
-
-
-  goFS
-.
-addEventListener
-(
-"click"
-,
-function
-()
-{
-
-
-var
- videoElement 
-=
- document
-.
-getElementById
-(
-"videoElement"
-);
-
-
-      videoElement
-.
-requestFullscreen
-();
-
-
-},
-false
-);
-
-
-<
-/script
->
-
-
+```html
+<video id=videoElement></video>
+<button id="goFS">Go Fullscreen</button>
+<script>
+  var goFS = document.getElementById("goFS");
+  goFS.addEventListener("click", function() {
+      var videoElement = document.getElementById("videoElement");
+      videoElement.requestFullscreen();
+  }, false);
+</script>
 ```
 
 如果`<video>`元素未定义控件属性，视频进入全屏模式后用户将无法对其进行控制。 建议的对策是使用一个初级容器，将视频和您希望用户看到的控件包装在这个容器内。
 
-```
-<
-div
-id
-=
-"container"
->
-
-
-<
-video
->
-<
-/video
->
-
-
-<
-div
->
-
-
-<
-button
->
-Play
-<
-/button
->
-
-
-<
-button
->
-Stop
-<
-/button
->
-
-
-<
-button
-id
-=
-"goFS"
->
-Go fullscreen
-<
-/button
->
-
-
-<
-/div
->
-
-
-<
-/div
->
-
-
-<
-script
->
-
-
-var
- goFS 
-=
- document
-.
-getElementById
-(
-"goFS"
-);
-
-
-  goFS
-.
-addEventListener
-(
-"click"
-,
-function
-()
-{
-
-
-var
- container 
-=
- document
-.
-getElementById
-(
-"container"
-);
-
-
-      container
-.
-requestFullscreen
-();
-
-
-},
-false
-);
-
-
-<
-/script
->
-
-
+```html
+<div id="container">
+  <video></video>
+  <div>
+    <button>Play</button>
+    <button>Stop</button>
+    <button id="goFS">Go fullscreen</button>
+  </div>
+</div>
+<script>
+  var goFS = document.getElementById("goFS");
+  goFS.addEventListener("click", function() {
+      var container = document.getElementById("container");
+      container.requestFullscreen();
+  }, false);
+</script>
 ```
 
 这可以大幅提高灵活性，因为您可以将 container 对象与 CSS 伪选择器合并（例如，达到隐藏“goFS”按钮的目的）。
 
-```
-<
-style
->
-
-
-#
-goFS
-:
--webkit-full-screen 
-#
-goFS 
-{
-
-
-display
-:
- none
-;
-
-
-}
-
-
-#
-goFS
-:
--moz-full-screen 
-#
-goFS 
-{
-
-
-display
-:
- none
-;
-
-
-}
-
-
-#
-goFS
-:
--ms-fullscreen 
-#
-goFS 
-{
-
-
-display
-:
- none
-;
-
-
-}
-
-
-#
-goFS
-:
-fullscreen 
-#
-goFS 
-{
-
-
-display
-:
- none
-;
-
-
-}
-
-
-<
-/style
->
-
-
+```html
+<style>
+  #goFS:-webkit-full-screen #goFS {
+    display: none;
+  }
+  #goFS:-moz-full-screen #goFS {
+    display: none;
+  }
+  #goFS:-ms-fullscreen #goFS {
+    display: none;
+  }
+  #goFS:fullscreen #goFS {
+    display: none;
+  }
+</style>
 ```
 
 按照这些模式，可以在检测到全屏模式处于运行状态时对用户界面作出相应调整，例如：
@@ -556,7 +150,7 @@ display
 自从 iPhone 发布以来，用户就一直能将网络应用安装到主屏幕，并以全屏模式启动。
 
 ```html
-
+<meta name="apple-mobile-web-app-capable" content="yes">
 ```
 
 > 如果 content 设置为 yes，则网络应用以全屏模式运行；&gt; 否则，不以全屏模式运行。 默认行为是使用 Safari 显示网络 &gt; 内容。 可以 &gt; 利用 window.navigator.standalone 只读布尔值 JavaScript 属性 &gt; 确定网页是否以全屏模式显示。[Apple](https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html)
@@ -566,7 +160,7 @@ display
 Chrome 团队近期实现的一项功能可在用户已将页面添加到主屏幕的情况下指示浏览器以全屏模式启动页面。 这与 iOS Safari 模式类似。
 
 ```html
-
+<meta name="mobile-web-app-capable" content="yes">
 ```
 
 > 可以利用 Chrome（Android 版）的“Add to Home screen”菜单项 &gt; 将网络应用设置为将应用快捷方式图标添加到 &gt; 设备的主屏幕，让应用以全屏“应用模式”启动。&gt;[Google Chrome](https://developers.chrome.com/multidevice/android/installtohomescreen)
@@ -585,7 +179,7 @@ Chrome 团队近期实现的一项功能可在用户已将页面添加到主屏�
 在创建清单并托管在网站上之后，只需要从所有包含应用的页面添加一个下面这样的 link 标记：
 
 ```html
-
+<link rel="manifest" href="/manifest.json">
 ```
 
 Chrome（Android 版）从 38 版（2014 年 10 月）起就已支持清单，让您能够控制当网络应用安装到主屏幕时的显示方式（通过`short_name`、`name`和`icons`属性），以及当用户点击启动图标时应以何种方式启动应用（通过`start_url`、`display`和`orientation`）。
@@ -593,7 +187,20 @@ Chrome（Android 版）从 38 版（2014 年 10 月）起就已支持清单，�
 清单示例如下所示。其中并未详尽展示清单可能包含的内容。
 
 ```json
-
+{
+  "short_name": "Kinlan's Amaze App",
+  "name": "Kinlan's Amazing Application ++",
+  "icons": [
+    {
+      "src": "launcher-icon-4x.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "landscape"
+}
 ```
 
 此功能是完全渐进式的功能，可通过它为支持该功能的浏览器用户打造更好、集成度更高的体验。
@@ -605,7 +212,7 @@ Chrome（Android 版）从 38 版（2014 年 10 月）起就已支持清单，�
 大多数实用程序应用都将立即受益于清单。对于您可能希望像移动平台上的所有其他应用一样独立启动的应用，要指示应用独立启动，请向网络应用清单添加以下内容：
 
 ```json
-
+"display": "standalone"
 ```
 
 ##### 游戏 {#_6}
@@ -615,13 +222,15 @@ Chrome（Android 版）从 38 版（2014 年 10 月）起就已支持清单，�
 如果您开发的是纵向滚动游戏或 Flappy Birds 之类的游戏，那么您很可能希望游戏始终以纵向模式显示。
 
 ```json
-
+"display": "fullscreen",
+"orientation": "portrait"
 ```
 
 如果与之相反，您开发的是益智游戏或 X-Com 之类的游戏，那么您多半希望游戏始终采用横向屏幕方向。
 
 ```json
-
+"display": "fullscreen",
+"orientation": "landscape"
 ```
 
 ##### 新闻网站 {#_7}
@@ -631,13 +240,13 @@ Chrome（Android 版）从 38 版（2014 年 10 月）起就已支持清单，�
 是否选择使用清单取决于您以及您认为用户喜欢以何种方式访问您提供的体验。 如果希望网站具有您认为应该具有的所有浏览器配色，可以将 display 设置为`browser`。
 
 ```json
-
+"display": "browser"
 ```
 
 如果希望新闻网站像大多数新闻中心型应用一样提供应用般的体验并从 UI 中移除所有网站式配色，可以通过将 display 设置为`standalone`来实现。
 
 ```json
-
+"display": "standalone"
 ```
 
 ### 弄虚作假：自动隐藏地址栏 {#_8}
@@ -645,7 +254,7 @@ Chrome（Android 版）从 38 版（2014 年 10 月）起就已支持清单，�
 可通过像下面这样自动隐藏地址栏来“伪造全屏模式”：
 
 ```js
-
+window.scrollTo(0,1);
 ```
 
 注意：是朋友我才告诉你。办法有是有，虽然有效，却并非正途。 还是不要使用为好。— Paul
@@ -669,7 +278,9 @@ iOS 没有硬件返回按钮或刷新手势。因此，必须确保用户能在�
 在 iOS 上，可以利用`navigator.standalone`布尔值来确认用户是否是从主屏幕启动的。
 
 ```js
-
+if(navigator.standalone == true) {
+  // My app is installed and therefore fullscreen
+}
 ```
 
 #### 网络应用清单（Chrome、Opera、Samsung） {#chromeoperasamsung}
@@ -679,19 +290,29 @@ iOS 没有硬件返回按钮或刷新手势。因此，必须确保用户能在�
 当用户通过在网站上使用手势来请求全屏时，有标准 Fullscreen API 可以使用，其中包括下面这样可调整 UI 来响应全屏状态的 CSS 伪选择器
 
 ```css
+selector:-webkit-full-screen {
+  display: block; // displays the element only when in fullscreen
+}
 
+selector {
+  display: none; // hides the element when not in fullscreen mode
+}
 ```
 
 如果用户从主屏幕启动网站，`display-mode`媒体查询将按照网络应用清单中的定义进行设置。 在纯粹全屏的情况下，其内容将是：
 
 ```css
+@media (display-mode: fullscreen) {
 
+}
 ```
 
 如果用户以独立模式启动应用，`display-mode`媒体查询将是`standalone`：
 
 ```css
+@media (display-mode: standalone) {
 
+}
 ```
 
 #### Firefox {#firefox}
@@ -699,7 +320,13 @@ iOS 没有硬件返回按钮或刷新手势。因此，必须确保用户能在�
 当用户通过网站请求全屏，或者用户以全屏模式启动应用时，所有标准 Fullscreen API 都可使用，其中包括下面这样可调整 UI 来响应全屏状态的 CSS 伪选择器：
 
 ```css
+selector:-moz-full-screen {
+  display: block; // hides the element when not in fullscreen mode
+}
 
+selector {
+  display: none; // hides the element when not in fullscreen mode
+}
 ```
 
 #### Internet Explorer {#internet_explorer}
@@ -707,7 +334,13 @@ iOS 没有硬件返回按钮或刷新手势。因此，必须确保用户能在�
 在 IE 中，CSS 伪类缺少连字符，但在其他方面的作用与 Chrome 和 Firefox 类似。
 
 ```css
+selector:-ms-fullscreen {
+  display: block;
+}
 
+selector {
+  display: none; // hides the element when not in fullscreen mode
+}
 ```
 
 #### 规范 {#_11}
@@ -715,7 +348,13 @@ iOS 没有硬件返回按钮或刷新手势。因此，必须确保用户能在�
 规范中的拼写匹配 IE 使用的语法。
 
 ```css
+selector:fullscreen {
+  display: block;
+}
 
+selector {
+  display: none; // hides the element when not in fullscreen mode
+}
 ```
 
 ### 保持用户的全屏体验 {#_12}
@@ -724,11 +363,9 @@ iOS 没有硬件返回按钮或刷新手势。因此，必须确保用户能在�
 
 这意味着您无法让构建的全屏网站跨越多个页面，这是因为：
 
-* 利用 ‘window.location = "http://example.com"\` 以编程方式更改网址会摆脱全屏模式。
+* 利用 ‘window.location = "\[[http://example.com"\`\]\(http://example.com"\`](http://example.com"`]%28http://example.com"`)\) 以编程方式更改网址会摆脱全屏模式。
 * 用户点击页面内的外部链接时将会退出全屏模式。
-* 通过
-  `navigator.pushState`
-  API 更改网址也会摆脱全屏体验。
+* 通过`navigator.pushState`API 更改网址也会摆脱全屏体验。
 
 如果想保持用户的全屏体验，可以采用以下这两个方案：
 
@@ -738,7 +375,7 @@ iOS 没有硬件返回按钮或刷新手势。因此，必须确保用户能在�
 通过使用 \#syntax 更新网址 \(window.location = "\#somestate"\) 以及侦听`window.onhashchange`事件，可以利用浏览器自身的历史堆栈管理应用状态变化，允许用户使用其硬件返回按钮，或者利用如下 history API 提供简单的编程返回按钮体验：
 
 ```js
-
+window.history.go(-1);
 ```
 
 ### 让用户选择进入全屏模式的时机 {#_13}
@@ -767,6 +404,4 @@ iOS 没有硬件返回按钮或刷新手势。因此，必须确保用户能在�
 ## 结论 {#_15}
 
 尽管我们尚未开发出完全标准化并且全面实现的 API，但利用这篇文章中提供的指引，无论使用什么客户端，您都可以轻松地打造出充分利用用户整个屏幕的体验。
-
-
 
