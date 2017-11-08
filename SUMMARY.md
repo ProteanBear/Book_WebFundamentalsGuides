@@ -36,6 +36,20 @@
     * [图像](she-ji-yu-yong-hu-ti-yan/tu-xiang.md)
     * [多设备内容](she-ji-yu-yong-hu-ti-yan/duo-she-bei-nei-rong.md)
 * [3.整合与互动](3zheng-he-yu-hu-dong.md)
+  * [3.1 添加到主屏幕](3zheng-he-yu-hu-dong/31-tian-jia-dao-zhu-ping-mu.md)
+    * [网络应用安装横幅](3zheng-he-yu-hu-dong/31-tian-jia-dao-zhu-ping-mu/wang-luo-ying-yong-an-zhuang-heng-fu.md)
+    * [网络应用清单](3zheng-he-yu-hu-dong/31-tian-jia-dao-zhu-ping-mu/wang-luo-ying-yong-qing-dan.md)
+    * [图标和浏览器颜色](3zheng-he-yu-hu-dong/31-tian-jia-dao-zhu-ping-mu/tu-biao-he-liu-lan-qi-yan-se.md)
+  * 3.2 设备API
+    * [用户位置](3zheng-he-yu-hu-dong/yong-hu-wei-zhi.md)
+    * [设备屏幕方向与运动](3zheng-he-yu-hu-dong/she-bei-ping-mu-fang-xiang-yu-yun-dong.md)
+    * [打造全屏体验](3zheng-he-yu-hu-dong/da-zao-quan-ping-ti-yan.md)
+  * 3.3 搜索优化
+  * 3.4 登录与凭据管理
+  * 3.5 社交发现
+  * 3.6 用户输入
+  * 3.7 网络支付
+  * 3.8 推送通知
 * [4.多媒体与虚拟现实](duo-mei-ti-yu-xu-ni-xian-shi.md)
 * 5.性能
 * 6.安全
