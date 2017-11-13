@@ -48,6 +48,7 @@
   * [3.3 搜索优化](3zheng-he-yu-hu-dong/33-sou-suo-you-hua.md)
   * [3.4 登录与凭据管理](3zheng-he-yu-hu-dong/34-deng-lu-yu-ping-ju-guan-li.md)
     * [检索凭据](3zheng-he-yu-hu-dong/34-deng-lu-yu-ping-ju-guan-li/jian-suo-ping-ju.md)
+    * [Save Credentials from Forms](3zheng-he-yu-hu-dong/34-deng-lu-yu-ping-ju-guan-li/save-credentials-from-forms.md)
   * 3.5 社交发现
   * 3.6 用户输入
   * 3.7 网络支付
