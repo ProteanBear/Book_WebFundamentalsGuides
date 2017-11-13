@@ -55,47 +55,20 @@ Payment Request 也可以扩展为返回额外信息，例如收货地址和选�
 
 为减轻追赶这一现行标准 API 的压力，我们强烈建议在代码的`<head>`部分添加此 shim。 此 shim 将随 API 的变化而更新，并会尽力让代码能够至少在 Chrome 的 2 个主要版本上正常运行。
 
-```
-<
-script
-src
-=
-"https://storage.googleapis.com/prshim/v1/payment-shim.js"
->
-
-
+```js
+<script src="https://storage.googleapis.com/prshim/v1/payment-shim.js">
 ```
 
 ### 创建 PaymentRequest {#create-paymentrequest}
 
 创建 PaymentRequest 的第一步是通过调用[`PaymentRequest`](https://www.w3.org/TR/payment-request/#paymentrequest-constructor)构造函数创建一个[`PaymentRequest`](https://www.w3.org/TR/payment-request/#paymentrequest-interface)对象。此步骤通常（并非总是）与用户发起的、表示其想要执行购买的操作相关。对象使用包含所需数据的参数构造。
 
-```
-var
- request 
-=
-new
-PaymentRequest
-(
-
-
-  methodData
-,
-// required payment method data
-
-
-  details
-,
-// required information about transaction
-
-
-  options     
-// optional parameter for things like shipping, etc.
-
-
+```js
+var request = new PaymentRequest(
+  methodData, // required payment method data
+  details,    // required information about transaction
+  options     // optional parameter for things like shipping, etc.
 );
-
-
 ```
 
 _PaymentRequest 构造函数_
@@ -106,31 +79,12 @@ _PaymentRequest 构造函数_
 
 目前，`PaymentRequest`在 Chrome 中仅支持以下标准信用卡：“`amex`”、“`diners`”、“`discover`”、“`jcb`”、“`maestro`”、“`mastercard`”、“`unionpay`”和“`visa`”。
 
-```
-var
- methodData 
-=
-[
-
-
-{
-
-
-    supportedMethods
-:
-[
-"visa"
-,
-"mastercard"
+```js
+var methodData = [
+  {
+    supportedMethods: ["visa", "mastercard"]
+  }
 ]
-
-
-}
-
-
-]
-
-
 ```
 
 _支付方式和数据_
@@ -147,110 +101,24 @@ _支付方式和数据_
 
 浏览器将根据您的定义渲染标签，并根据用户的语言区域自动应用正确的货币格式。请注意，应使用与内容相同的语言渲染标签。
 
-```
-var
- details 
-=
-{
-
-
-  displayItems
-:
-[
-
-
-{
-
-
-      label
-:
-"Original donation amount"
-,
-
-
-      amount
-:
-{
- currency
-:
-"USD"
-,
- value 
-:
-"65.00"
-},
-// US$65.00
-
-
-},
-
-
-{
-
-
-      label
-:
-"Friends and family discount"
-,
-
-
-      amount
-:
-{
- currency
-:
-"USD"
-,
- value 
-:
-"-10.00"
-},
-// -US$10.00
-
-
-      pending
-:
-true
-// The price is not determined yet
-
-
+```js
+var details = {
+  displayItems: [
+    {
+      label: "Original donation amount",
+      amount: { currency: "USD", value : "65.00" }, // US$65.00
+    },
+    {
+      label: "Friends and family discount",
+      amount: { currency: "USD", value : "-10.00" }, // -US$10.00
+      pending: true // The price is not determined yet
+    }
+  ],
+  total:  {
+    label: "Total",
+    amount: { currency: "USD", value : "55.00" }, // US$55.00
+  }
 }
-
-
-],
-
-
-  total
-:
-{
-
-
-    label
-:
-"Total"
-,
-
-
-    amount
-:
-{
- currency
-:
-"USD"
-,
- value 
-:
-"55.00"
-},
-// US$55.00
-
-
-}
-
-
-}
-
-
 ```
 
 _交易详情_
@@ -259,35 +127,11 @@ _交易详情_
 
 `details`中所使用的重复值或计算值可指定为字符串字面量或各字符串变量。
 
-```
-var
- currency 
-=
-"USD"
-;
-
-
-var
- amount 
-=
-"65.00"
-;
-
-
-var
- discount 
-=
-"-10.00"
-;
-
-
-var
- total 
-=
-"55.00"
-;
-
-
+```js
+var currency = "USD";
+var amount = "65.00";
+var discount = "-10.00";
+var total = "55.00";
 ```
 
 _PaymentRequest 变量_
@@ -300,56 +144,13 @@ _PaymentRequest 变量_
 
 通过调用[`show()`](https://www.w3.org/TR/payment-request/#show)方法激活`PaymentRequest`界面。此方法会调用一个原生 UI，让用户检查购物详情、添加或更改信息并最终进行支付。用户接受或拒绝支付请求时，将返回可解析[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)（带有其`then()`方法和回调函数）。
 
-```
-request
-.
-show
-().
-then
-(
-function
-(
-paymentResponse
-)
-{
-
-
-// Process paymentResponse here
-
-
-  paymentResponse
-.
-complete
-(
-"success"
-);
-
-
-}).
-catch
-(
-function
-(
-err
-)
-{
-
-
-  console
-.
-error
-(
-"Uh oh, something bad happened"
-,
- err
-.
-message
-);
-
-
+```js
+request.show().then(function(paymentResponse) {
+  // Process paymentResponse here
+  paymentResponse.complete("success");
+}).catch(function(err) {
+  console.error("Uh oh, something bad happened", err.message);
 });
-
-
 ```
 
 _PaymentRequest show 方法_
@@ -362,78 +163,162 @@ _PaymentRequest show 方法_
 
 如果您取消请求，将需要创建一个新的`PaymentRequest`实例，才能再次调用`show()`。
 
-```
-var
- paymentTimeout 
-=
- window
-.
-setTimeout
-(
-function
-()
-{
-
-
-  window
-.
-clearTimeout
-(
-paymentTimeout
-);
-
-
-  request
-.
-abort
-().
-then
-(
-function
-()
-{
-
-
-    console
-.
-log
-(
-'Payment timed out after 20 minutes.'
-);
-
-
-}).
-catch
-(
-function
-()
-{
-
-
-    console
-.
-log
-(
-'Unable to abort.'
-);
-
-
-});
-
-
-},
-20
-*
-60
-*
-1000
-);
-/* 20 minutes */
-
-
+```js
+var paymentTimeout = window.setTimeout(function() {
+  window.clearTimeout(paymentTimeout);
+  request.abort().then(function() {
+    console.log('Payment timed out after 20 minutes.');
+  }).catch(function() {
+    console.log('Unable to abort.');
+  });
+}, 20 * 60 * 1000);  /* 20 minutes */
 ```
 
 _PaymentRequest abort 方法_
 
+### 处理 PaymentResponse {#-paymentresponse}
+
+用户批准库款请求后，[`show()`](https://www.w3.org/TR/payment-request/#show)方法的 promise 会立即解析，生成`PaymentResponse`对象。
+
+| `PaymentResponse` | 具有下列字段： |
+| :--- | :--- |
+| `methodName` | 表示所选支付方式的字符串（例如 visa） |
+| `details` | 含有`methodName`信息的字典 |
+| `shippingAddress` | 用户的收货地址（如有请求） |
+| `shippingOption` | 所选发货选项的 ID（如有请求） |
+| `payerEmail` | 付款人的电子邮件地址（如有请求） |
+| `payerPhone` | 付款人的电话号码（如有请求） |
+| `payerName` | 付款人的姓名（如有请求） |
+
+对于信用卡付款，响应为标准格式。对于非信用卡付款（例如 Android Pay），响应将由支付服务商提供文档说明。信用卡响应包含下列字典：
+
+`cardholderName、cardNumber、expiryMonth、expiryYear、cardSecurityCode、billingAddress`
+
+接收支付信息后，应用需将支付信息提交给支付处理机构进行处理。发生请求时，UI 会显示一个转环。收到响应后，应用需调用`complete()`来关闭 UI。
+
+```js
+request.show().then(paymentResponse => {
+  var paymentData = {
+    // payment method string, e.g. “visa”
+    method: paymentResponse.methodName,
+    // payment details as you requested
+    details: paymentResponse.details
+  };
+  return fetch('/pay', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(paymentData)
+  }).then(res => {
+    if (res.status === 200) {
+      return res.json();
+    } else {
+      throw 'Payment Error';
+    }
+  }).then(res => {
+    paymentResponse.complete("success");
+  }, err => {
+    paymentResponse.complete("fail");
+  });
+}).catch(err => {
+  console.error("Uh oh, something bad happened", err.message);
+});
+```
+
+![](https://developers.google.com/web/fundamentals/payments/images/8_card_verified.png?hl=zh-cn)
+
+[`complete()`](https://www.w3.org/TR/payment-request/#complete)方法告知 User Agent 用户交互已结束，并允许应用将结果通知用户以及处理剩余的 UI 元素。
+
+```js
+paymentResponse.complete('success').then(() => {
+  // Success UI
+}
+
+paymentResponse.complete('fail').then(() => {
+  // Error UI
+};
+```
+
+_PaymentRequest complete 方法_
+
+## 收集收货地址 {#shipping-address}
+
+![](https://developers.google.com/web/fundamentals/payments/images/5_9_payment_request_ui.png?hl=zh-cn)如果您是出售实体物品的商家，则可能需要通过 Payment Request API 收集用户的收货地址。这通过将`requestShipping: true`添加到`options`参数来实现。设置此参数后，“Shipping”将添加到 UI，用户可从已保存的地址列表中选择收货地址，也可以添加新的收货地址。
+
+您也可以通过指定`shippingType`在 UI 中使用“Delivery”或“Pickup”替代“Shipping”。这仅作显示用途。
+
+注：[`details`](https://www.w3.org/TR/payment-request/#paymentdetails-dictionary)`.shippingOptions`在初始化时必须为`undefined`或空数组才能接收`shippingaddresschange`事件。否则事件将无法触发。
+
+```js
+var options = {
+  requestShipping: true,
+  shippingType: "shipping" // "shipping"(default), "delivery" or "pickup"
+};
+
+var request = new PaymentRequest(methodData, details, options)
+```
+
+_交易选项_
+
+![](https://developers.google.com/web/fundamentals/payments/images/9.5_address_rejected.png?hl=zh-cn)用户选择或添加新的收货地址时，系统会动态计算发货选项。您可以添加`shippingaddresschange`事件的侦听器，它在用户选择收货地址时触发。然后，可以验证是否能够发货到该地址，计算发货选项并以新的发货选项和计价信息更新[`details`](https://www.w3.org/TR/payment-request/#paymentdetails-dictionary)`.shippingOptions`。您可以通过将某一选项的`selected`设为`true`来提供默认发货选项。
+
+如果要出于地区不受支持等原因而拒绝使用某一地址，可以向`details.shippingOptions`传递空数组。UI 会通知用户，所选地址无法用于收货。
+
+注：解析`shippingaddresschange`事件并保留`details.shippingOptions`的空数组状态也会导致地址遭拒（换言之，您无法发货到该地址）。请确保发货选项保持更新，并能匹配用户提供的地址。
+
+```js
+request.addEventListener('shippingaddresschange', e => {
+  e.updateWith(((details, addr) => {
+    if (addr.country === 'US') {
+      var shippingOption = {
+        id: '',
+        label: '',
+        amount: {currency: 'USD', value: '0.00'},
+        selected: true
+      };
+      if (addr.region === 'US') {
+        shippingOption.id = 'us';
+        shippingOption.label = 'Standard shipping in US';
+        shippingOption.amount.value = '0.00';
+        details.total.amount.value = '55.00';
+      } else {
+        shippingOption.id = 'others';
+        shippingOption.label = 'International shipping';
+        shippingOption.amount.value = '10.00';
+        details.total.amount.value = '65.00';
+      }
+      if (details.displayItems.length === 2) {
+        details.displayItems.splice(1, 0, shippingOption);
+      } else {
+        details.displayItems.splice(1, 1, shippingOption);
+      }
+      details.shippingOptions = [shippingOption];
+    } else {
+      details.shippingOptions = [];
+    }
+    return Promise.resolve(details);
+  })(details, request.shippingAddress));
+});
+```
+
+![](https://developers.google.com/web/fundamentals/payments/images/10_shipping_address.png?hl=zh-cn)用户确认支付请求后，[`show()`](https://www.w3.org/TR/payment-request/#show)方法的 promise 得到解析。应用可使用[`PaymentResponse`](https://www.w3.org/TR/payment-request/#paymentresponse-interface)对象的`.shippingAddress`属性，将收货地址和其他属性告知支付处理机构。
+
+```js
+request.show().then(paymentResponse => {
+  var paymentData = {
+    // payment method string
+    method: paymentResponse.methodName,
+    // payment details as you requested
+    details: paymentResponse.details.toJSON(),
+    // shipping address information
+    address: paymentResponse.shippingAddress.toJSON()
+  };
+  // Send information to the server
+});
+```
+
+  
 
 
