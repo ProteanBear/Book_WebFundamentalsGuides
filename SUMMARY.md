@@ -45,7 +45,7 @@
     * [设备屏幕方向与运动](3zheng-he-yu-hu-dong/she-bei-ping-mu-fang-xiang-yu-yun-dong.md)
     * [打造全屏体验](3zheng-he-yu-hu-dong/da-zao-quan-ping-ti-yan.md)
     * [一键通话](3zheng-he-yu-hu-dong/yi-jian-tong-hua.md)
-  * 3.3 搜索优化
+  * [3.3 搜索优化](3zheng-he-yu-hu-dong/33-sou-suo-you-hua.md)
   * 3.4 登录与凭据管理
   * 3.5 社交发现
   * 3.6 用户输入
