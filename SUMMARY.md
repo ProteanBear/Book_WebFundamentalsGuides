@@ -50,7 +50,7 @@
     * [检索凭据](3zheng-he-yu-hu-dong/34-deng-lu-yu-ping-ju-guan-li/jian-suo-ping-ju.md)
     * [Save Credentials from Forms](3zheng-he-yu-hu-dong/34-deng-lu-yu-ping-ju-guan-li/save-credentials-from-forms.md)
   * [3.5 社交发现](3zheng-he-yu-hu-dong/35-she-jiao-fa-xian.md)
-  * 3.6 用户输入
+  * [3.6 用户输入](3zheng-he-yu-hu-dong/36-yong-hu-shu-ru.md)
   * 3.7 网络支付
   * 3.8 推送通知
 * [4.多媒体与虚拟现实](duo-mei-ti-yu-xu-ni-xian-shi.md)
