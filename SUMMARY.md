@@ -53,6 +53,7 @@
   * [3.6 用户输入](3zheng-he-yu-hu-dong/36-yong-hu-shu-ru.md)
     * [为网站添加触摸功能](3zheng-he-yu-hu-dong/36-yong-hu-shu-ru/wei-wang-zhan-tian-jia-hong-mo-gong-neng.md)
   * [3.7 网络支付](3zheng-he-yu-hu-dong/37-wang-luo-zhi-fu.md)
+    * [Deep Dive into the Payment Request API](3zheng-he-yu-hu-dong/37-wang-luo-zhi-fu/deep-dive-into-the-payment-request-api.md)
   * 3.8 推送通知
 * [4.多媒体与虚拟现实](duo-mei-ti-yu-xu-ni-xian-shi.md)
 * 5.性能
