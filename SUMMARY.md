@@ -65,6 +65,7 @@
     * [Push Events](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/push-events.md)
     * [Displaying a Notification](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/displaying-a-notification.md)
     * [Notification Behaviour](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/notification-behaviour.md)
+    * [Common Notification Patterns](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/common-notification-patterns.md)
 * [4.多媒体与虚拟现实](duo-mei-ti-yu-xu-ni-xian-shi.md)
 * 5.性能
 * 6.安全
