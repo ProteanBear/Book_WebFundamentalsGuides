@@ -70,6 +70,11 @@
     * [Web Push: Common Issues and Reporting Bugs](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/web-push-common-issues-and-reporting-bugs.md)
     * [Video: Web Push Notifications \(I/O 2016\)](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/video-web-push-notifications-io-2016.md)
 * [4.多媒体与虚拟现实](duo-mei-ti-yu-xu-ni-xian-shi.md)
+  * 4.1 视频与音频播放
+    * [视频](duo-mei-ti-yu-xu-ni-xian-shi/shi-pin.md)
+  * 4.2 录制与保存
+  * 4.3 操作媒体文件
+  * 4.4 虚拟现实
 * 5.性能
 * 6.安全
 * 7.相关技术
