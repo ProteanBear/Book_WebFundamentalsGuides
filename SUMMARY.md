@@ -68,6 +68,7 @@
     * [Common Notification Patterns](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/common-notification-patterns.md)
     * [FAQ](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/faq.md)
     * [Web Push: Common Issues and Reporting Bugs](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/web-push-common-issues-and-reporting-bugs.md)
+    * [Video: Web Push Notifications \(I/O 2016\)](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/video-web-push-notifications-io-2016.md)
 * [4.多媒体与虚拟现实](duo-mei-ti-yu-xu-ni-xian-shi.md)
 * 5.性能
 * 6.安全
