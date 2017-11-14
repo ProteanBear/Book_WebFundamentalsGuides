@@ -206,7 +206,6 @@ Android Pay example in payment request UI.
 
 We won't go into details of how to add Android Pay in this article,[we have a section dedicated to that here](android-pay-hl=zh-cn.html).
 
-  
 Edge Cases
 
 There are some edge cases to be aware of when defining your supported payment methods.
@@ -228,61 +227,6 @@ The second argument we need to pass to the`PaymentRequest`constructor is the pay
 The contents of the`total`parameter should contain a`label`parameter and an`amount`parameter consisting of a`currency`and`value`. A basic example would be:
 
 ```
-const
- paymentDetails 
-=
-{
-
-
-  total
-:
-{
-
-
-    label
-:
-'Total'
-,
-
-
-    amount
-:
-{
-
-
-      currency
-:
-'USD'
-,
-
-
-      value
-:
-'0'
-,
-
-
-},
-
-
-},
-
-
-};
-
-
-
-
-new
-PaymentRequest
-(
-supportedPaymentMethods
-,
- paymentDetails
-,
- options
-);
-
 
 ```
 
@@ -292,7 +236,7 @@ This controls the "order summary" section of the UI:
 
 How the total parameter affects the UI.
 
-The`total`parameter is the only_required_piece of information in the payment details object.
+The`total`parameter is the only\_required\_piece of information in the payment details object.
 
 The`label`can be any piece of text you like, the`currency`must be a string currency code following the[ISO 4217 standard](https://www.iso.org/iso-4217-currency-codes.html), and the`value`is the amount for the order.
 
