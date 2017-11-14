@@ -59,7 +59,7 @@
   * [3.8 推送通知](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi.md)
     * [How Push Works](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/how-push-works.md)
     * [Subscribing a User](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/subscribing-a-user.md)
-    * Permission UX
+    * [Permission UX](3zheng-he-yu-hu-dong/38-tui-song-tong-zhi/permission-ux.md)
 * [4.多媒体与虚拟现实](duo-mei-ti-yu-xu-ni-xian-shi.md)
 * 5.性能
 * 6.安全
