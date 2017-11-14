@@ -10,12 +10,8 @@ The JavaScript API to do this is reasonably straight forward, so let's step thro
 
 First we need check if the current browser actually supports push messaging. We can check if push is supported with two simple checks.
 
-1. Check for
-   _serviceWorker_
-   on
-   _navigator_
-   .
-2. Check for_PushManager_on_window_.
+1. Check for _serviceWorker _on _navigator_.
+2. Check for_PushManager\_on\_window_.
 
    if \(!\('serviceWorker' in navigator\)\) { // Service Worker isn't supported on this browser, disable or hide UI. return; }
 
@@ -31,76 +27,17 @@ When we register a service worker, we are telling the browser where our service 
 
 To register a service worker, call`navigator.serviceWorker.register()`, passing in the path to our file. Like so:
 
-```
-function
- registerServiceWorker
-()
-{
-
-
-return
- navigator
-.
-serviceWorker
-.
-register
-(
-'service-worker.js'
-)
-
-
-.
-then
-(
-function
-(
-registration
-)
-{
-
-
-    console
-.
-log
-(
-'Service worker successfully registered.'
-);
-
-
-return
- registration
-;
-
-
-})
-
-
-.
-catch
-(
-function
-(
-err
-)
-{
-
-
-    console
-.
-error
-(
-'Unable to register service worker.'
-,
- err
-);
-
-
-});
-
-
+```js
+function registerServiceWorker() {
+  return navigator.serviceWorker.register('service-worker.js')
+  .then(function(registration) {
+    console.log('Service worker successfully registered.');
+    return registration;
+  })
+  .catch(function(err) {
+    console.error('Unable to register service worker.', err);
+  });
 }
-
-
 ```
 
 This code above tells the browser that we have a service worker file and where it's located. In this case, the service worker file is at`/service-worker.js`. Behind the scenes the browser will take the following steps after calling`register()`:
@@ -121,110 +58,23 @@ We've registered our service worker and are ready to subscribe the user, the nex
 
 The API for getting permission is relatively simple, the downside is that the API[recently changed from taking a callback to returning a Promise](https://developer.mozilla.org/en-US/docs/Web/API/Notification/requestPermission). The problem with this, is that we can't tell what version of the API is implemented by the current browser, so you have to implement both and handle both.
 
-```
-function
- askPermission
-()
-{
+```js
+function askPermission() {
+  return new Promise(function(resolve, reject) {
+    const permissionResult = Notification.requestPermission(function(result) {
+      resolve(result);
+    });
 
-
-return
-new
-Promise
-(
-function
-(
-resolve
-,
- reject
-)
-{
-
-
-const
- permissionResult 
-=
-Notification
-.
-requestPermission
-(
-function
-(
-result
-)
-{
-
-
-      resolve
-(
-result
-);
-
-
-});
-
-
-
-
-if
-(
-permissionResult
-)
-{
-
-
-      permissionResult
-.
-then
-(
-resolve
-,
- reject
-);
-
-
+    if (permissionResult) {
+      permissionResult.then(resolve, reject);
+    }
+  })
+  .then(function(permissionResult) {
+    if (permissionResult !== 'granted') {
+      throw new Error('We weren\'t granted permission.');
+    }
+  });
 }
-
-
-})
-
-
-.
-then
-(
-function
-(
-permissionResult
-)
-{
-
-
-if
-(
-permissionResult 
-!==
-'granted'
-)
-{
-
-
-throw
-new
-Error
-(
-'We weren\'t granted permission.'
-);
-
-
-}
-
-
-});
-
-
-}
-
-
 ```
 
 In the above code, the important snippet of code is the call to`Notification.requestPermission()`. This method will display a prompt to the user:
@@ -237,7 +87,7 @@ In the sample code above, the promise returned by`askPermission()`resolves if th
 
 One edge case that you need to handle is if the user clicks the 'Block' button. If this happens, your web app will not be able to ask the user for permission again. They'll have to manually "unblock" your app by changing its permission state, which is buried in a settings panel. Think carefully about how and when you ask the user for permission, because if they click block, it's not an easy way to reverse that decision.
 
-The good news is that most users are happy to give permission as long as they_know_why the permission is being asked.
+The good news is that most users are happy to give permission as long as they\_know\_why the permission is being asked.
 
 We'll look at how some popular sites ask for permission later on.
 
@@ -245,115 +95,27 @@ We'll look at how some popular sites ask for permission later on.
 
 Once we have our service worker registered and we've got permission, we can subscribe a user by calling`registration.pushManager.subscribe()`.
 
-```
-function
- subscribeUserToPush
-()
-{
+```js
+function subscribeUserToPush() {
+  return navigator.serviceWorker.register('service-worker.js')
+  .then(function(registration) {
+    const subscribeOptions = {
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(
+        'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U'
+      )
+    };
 
-
-return
- navigator
-.
-serviceWorker
-.
-register
-(
-'service-worker.js'
-)
-
-
-.
-then
-(
-function
-(
-registration
-)
-{
-
-
-const
- subscribeOptions 
-=
-{
-
-
-      userVisibleOnly
-:
-true
-,
-
-
-      applicationServerKey
-:
- urlBase64ToUint8Array
-(
-
-
-'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U'
-
-
-)
-
-
-};
-
-
-
-
-return
- registration
-.
-pushManager
-.
-subscribe
-(
-subscribeOptions
-);
-
-
-})
-
-
-.
-then
-(
-function
-(
-pushSubscription
-)
-{
-
-
-    console
-.
-log
-(
-'Received PushSubscription: '
-,
- JSON
-.
-stringify
-(
-pushSubscription
-));
-
-
-return
- pushSubscription
-;
-
-
-});
-
-
+    return registration.pushManager.subscribe(subscribeOptions);
+  })
+  .then(function(pushSubscription) {
+    console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
+    return pushSubscription;
+  });
 }
-
-
 ```
 
-When calling the`subscribe()`method, we pass in an_options_object, which consists of both required and optional parameters.
+When calling the`subscribe()`method, we pass in an\_options\_object, which consists of both required and optional parameters.
 
 Lets look at all the options we can pass in.
 
@@ -381,15 +143,9 @@ The`applicationServerKey`option passed into the`subscribe()`call is the applicat
 
 The diagram below illustrates these steps.
 
-1. Your web app is loaded in a browser and you call
-   `subscribe()`
-   , passing in your public application server key.
+1. Your web app is loaded in a browser and you call`subscribe()`, passing in your public application server key.
 2. The browser then makes a network request to a push service who will generate an endpoint, associate this endpoint with the applications public key and return the endpoint to the browser.
-3. The browser will add this endpoint to the
-   `PushSubscription`
-   , which is returned via the
-   `subscribe()`
-   promise.
+3. The browser will add this endpoint to the`PushSubscription`, which is returned via the`subscribe()`promise.
 
 ![](https://developers.google.com/web/fundamentals/push-notifications/images/svgs/application-server-key-subscribe.svg?hl=zh-cn "Illustration of the public application server key is used in subscribe
 method.")
@@ -401,29 +157,15 @@ message.")
 
 Technically, the`applicationServerKey`is optional. However, the easiest implementation on Chrome requires it, and other browsers may require it in the future. It's optional on Firefox.
 
-The specification that defines_what_the application server key should be is the[VAPID spec](https://tools.ietf.org/html/draft-thomson-webpush-vapid). Whenever you read something referring to_"application server keys"_or_"VAPID keys"_, just remember that they are the same thing.
+The specification that defines_what\_the application server key should be is the_[_VAPID spec_](https://tools.ietf.org/html/draft-thomson-webpush-vapid)_. Whenever you read something referring to_"application server keys"_or_"VAPID keys"\_, just remember that they are the same thing.
 
 #### How to Create Application Server Keys {#how_to_create_application_server_keys}
 
 You can create a public and private set of application server keys by visiting[web-push-codelab.glitch.me](https://web-push-codelab.glitch.me/)or you can use the[web-push command line](https://github.com/web-push-libs/web-push#command-line)to generate keys by doing the following:
 
-```
-$ npm install 
--
-g web
--
-push
-
-
-$ web
--
-push generate
--
-vapid
--
-keys
-
-
+```bash
+$ npm install -g web-push
+$ web-push generate-vapid-keys
 ```
 
 You only need to create these keys once for your application, just make sure you keep the private key private. \(Yeah, I just said that.\)
@@ -436,118 +178,37 @@ There is one side effect of calling`subscribe()`. If your web app doesn't have p
 
 We call`subscribe()`, pass in some options, and in return we get a promise that resolves to a`PushSubscription`resulting in some code like so:
 
-```
-function
- subscribeUserToPush
-()
-{
+```js
+function subscribeUserToPush() {
+  return navigator.serviceWorker.register('service-worker.js')
+  .then(function(registration) {
+    const subscribeOptions = {
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(
+        'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U'
+      )
+    };
 
-
-return
- navigator
-.
-serviceWorker
-.
-register
-(
-'service-worker.js'
-)
-
-
-.
-then
-(
-function
-(
-registration
-)
-{
-
-
-const
- subscribeOptions 
-=
-{
-
-
-      userVisibleOnly
-:
-true
-,
-
-
-      applicationServerKey
-:
- urlBase64ToUint8Array
-(
-
-
-'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U'
-
-
-)
-
-
-};
-
-
-
-
-return
- registration
-.
-pushManager
-.
-subscribe
-(
-subscribeOptions
-);
-
-
-})
-
-
-.
-then
-(
-function
-(
-pushSubscription
-)
-{
-
-
-    console
-.
-log
-(
-'Received PushSubscription: '
-,
- JSON
-.
-stringify
-(
-pushSubscription
-));
-
-
-return
- pushSubscription
-;
-
-
-});
-
-
+    return registration.pushManager.subscribe(subscribeOptions);
+  })
+  .then(function(pushSubscription) {
+    console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
+    return pushSubscription;
+  });
 }
-
-
 ```
 
 The`PushSubscription`object contains all the required information needed to send a push messages to that user. If you print out the contents using`JSON.stringify()`, you'll see the following:
 
-```
-
+```json
+{
+  "endpoint": "https://some.pushservice.com/something-unique",
+  "keys": {
+    "p256dh":
+"BIPUL12DLfytvTajnryr2PRdAgXS3HGKiLqndGcJGabyhHheJYlNGCeXl1dn18gSJ1WAkAPIxr4gK0_dQds4yiI=",
+    "auth":"FPssNDTKnInHVndSTdbKFw=="
+  }
+}
 ```
 
 The`endpoint`is the push services URL. To trigger a push message, make a POST request to this URL.
@@ -558,20 +219,70 @@ The`keys`object contains the values used to encrypt message data sent with a pus
 
 Once you have a push subscription you'll want to send it to your server. It's up to you how you do that but a tiny tip is to use`JSON.stringify()`to get all the necessary data out of the subscription object. Alternatively you can piece together the same result manually like so:
 
-```
+```js
+const subscriptionObject = {
+  endpoint: pushSubscription.endpoint,
+  keys: {
+    p256dh: pushSubscription.getKeys('p256dh'),
+    auth: pushSubscription.getKeys('auth')
+  }
+};
 
+// The above is the same output as:
+
+const subscriptionObjectToo = JSON.stringify(pushSubscription);
 ```
 
 Sending the subscription is done in the web page like so:
 
-```
+```js
+function sendSubscriptionToBackEnd(subscription) {
+  return fetch('/api/save-subscription/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(subscription)
+  })
+  .then(function(response) {
+    if (!response.ok) {
+      throw new Error('Bad status code from server.');
+    }
 
+    return response.json();
+  })
+  .then(function(responseData) {
+    if (!(responseData.data && responseData.data.success)) {
+      throw new Error('Bad response from server.');
+    }
+  });
+}
 ```
 
 The node server receives this request and saves the data to a database for use later on.
 
-```
+```js
+app.post('/api/save-subscription/', function (req, res) {
+  if (!isValidSaveRequest(req, res)) {
+    return;
+  }
 
+  return saveSubscriptionToDatabase(req.body)
+  .then(function(subscriptionId) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({ data: { success: true } }));
+  })
+  .catch(function(err) {
+    res.status(500);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({
+      error: {
+        id: 'unable-to-save-subscription',
+        message: 'The subscription was received but we were unable to save it to our database.'
+      }
+    }));
+  });
+});
 ```
 
 With the`PushSubscription`details on our server we are good to send our user a message whenever we want.
@@ -593,6 +304,4 @@ This common API is called the[Web Push Protocol](https://tools.ietf.org/html/dra
 > If I subscribe a user on their desktop, are they subscribed on their phone as well?
 
 Unfortunately not. A user must register for push on each browser they wish to receive messages on. It's also worth noting that this will require the user granting permission on each device.
-
-
 
