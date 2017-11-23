@@ -84,6 +84,7 @@
       * [图像优化](5xing-neng/jia-zai-xing-neng/you-hua-nei-rong-xiao-lv/tu-xiang-you-hua.md)
       * [网页字体优化](5xing-neng/jia-zai-xing-neng/you-hua-nei-rong-xiao-lv/wang-ye-zi-ti-you-hua.md)
       * [HTTP 缓存](5xing-neng/jia-zai-xing-neng/you-hua-nei-rong-xiao-lv/http-huan-cun.md)
+    * [离线指南](5xing-neng/jia-zai-xing-neng/li-xian-zhi-nan.md)
   * 5.2 渲染性能
 * 6.安全
 * 7.相关技术
