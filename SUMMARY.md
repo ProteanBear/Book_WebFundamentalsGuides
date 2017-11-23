@@ -76,6 +76,9 @@
   * 4.3 操作媒体文件
   * 4.4 虚拟现实
 * [5.性能](5xing-neng.md)
+  * [5.1 加载性能](5xing-neng/jia-zai-xing-neng.md)
+    * [了解低带宽和高延迟](5xing-neng/jia-zai-xing-neng/le-jie-di-dai-kuan-he-gao-yan-chi.md)
+  * 5.2 渲染性能
 * 6.安全
 * 7.相关技术
 * 附：词汇表
