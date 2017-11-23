@@ -214,3 +214,107 @@ _网页字体_是一个字形集合，而每个字形是描述字母或符号的
 
 注：为获得最好的一致性和视觉效果，您不应该依赖字体合成，而应最大限度减少使用的字体变体的数量并指定其位置，这样一来，只有在网页使用它们时，浏览器才会进行下载。不过，在某些情况下，合成的变体[或许是可行的选择](https://www.igvita.com/2014/09/16/optimizing-webfont-selection-and-synthesis/)，不过请谨慎使用。
 
+## 优化加载和渲染 {#_6}
+
+### TL;DR {#tldr_hide-from-toc_2}
+
+* 在构建渲染树之前会延迟字体请求，这可能会导致文本渲染延迟。
+* 您可以通过 Font Loading API 实现自定义字体加载和渲染策略，以替换默认延迟加载字体加载。
+* 您可以通过字体内联替换较旧浏览器中的默认延迟加载字体加载。
+
+一个“完整”网页字体包括您可能不需要的所有样式变体，加上可能不会使用的所有字形，很容易就会产生几兆字节的下载。为解决此问题，专门设计了 @font-face CSS 规则，您可以利用该规则将字体系列拆分成一个由 unicode 子集、不同样式变体等资源组成的资源集合。
+
+鉴于这些声明，浏览器会确定需要的子集和变体，并下载渲染文本所需的最小集，非常方便。但如果您不小心，它也可能会在关键渲染路径中形成性能瓶颈并延迟文本渲染。
+
+### 网页字体和关键渲染路径 {#_7}
+
+字体延迟加载带有一个可能会延迟文本渲染的重要隐藏影响：浏览器必须[构建渲染树](../critical-rendering-path/render-tree-construction.html)（它依赖 DOM 和 CSSOM 树），然后才能知道需要使用哪些字体资源来渲染文本。因此，字体请求的处理将远远滞后于其他关键资源请求的处理，并且在获取资源之前，可能会阻止浏览器渲染文本。
+
+![](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/images/font-crp.png "字体关键渲染路径")
+
+1. 浏览器请求 HTML 文档。
+2. 浏览器开始解析 HTML 响应和构建 DOM。
+3. 浏览器发现 CSS、JS 以及其他资源并分派请求。
+4. 浏览器在收到所有 CSS 内容后构建 CSSOM，然后将其与 DOM 树合并以构建渲染树。
+   * 在渲染树指示需要哪些字体变体在网页上渲染指定文本后，将分派字体请求。
+5. 浏览器执行布局并将内容绘制到屏幕上。
+   * 如果字体尚不可用，浏览器可能不会渲染任何文本像素。
+   * 字体可用之后，浏览器将绘制文本像素。
+
+网页内容的首次绘制（可在渲染树构建后不久完成）与字体资源请求之间的“竞赛”产生了“空白文本问题”，出现该问题时，浏览器会在渲染网页布局时遗漏所有文本。
+
+不同浏览器之间实际行为有所差异：
+
+* Safari 会在字体下载完成之前延迟文本渲染。
+* Chrome 和 Firefox 会将字体渲染暂停最多 3 秒，之后他们会使用一种后备字体。并且字体下载完成后，他们会使用下载的字体重新渲染一次文本。
+* IE 会在请求字体尚不可用时立即使用后备字体进行渲染，然后在字体下载完成后进行重新渲染。
+
+不同的渲染策略各有充分的支持和反对理由。一些人觉得重新渲染令人反感，而其他人则愿意立即看到结果，并且不介意在字体下载完成后网页的自动重排 - 我们暂且不会参与这一争论。要点在于，虽然延迟加载减少了字节数，但也可能会延迟文本渲染。 下一部分将介绍如何才能优化这一行为。
+
+### 通过 Font Loading API 优化字体渲染 {#font_loading_api}
+
+[Font Loading API](http://dev.w3.org/csswg/css-font-loading/)提供了一种脚本编程接口来定义和操纵 CSS 字体，追踪其下载进度，以及替换其默认延迟下载行为。例如，如果您确定将需要特定字体变体，您可以定义它并指示浏览器启动对字体资源的立即获取：
+
+```js
+-var font = new FontFace("Awesome Font", "url(/fonts/awesome.woff2)", {
+  style: 'normal', unicodeRange:'U+000-5FF', weight:'400'
+});
+
+font.load(); // don't wait for the render tree, initiate an immediate fetch!
+
+font.ready().then(function() {
+  // apply the font (which may re-render text and cause a page reflow)
+  // after the font has finished downloading
+  document.fonts.add(font);
+  document.body.style.fontFamily = "Awesome Font, serif";
+
+  // OR... by default the content is hidden, 
+  // and it's rendered after the font is available
+  var content = document.getElementById("content");
+  content.style.visibility = "visible";
+
+  // OR... apply your own render strategy here... 
+});
+```
+
+并且，由于您可以检查字体状态（通过[check\(\)](http://dev.w3.org/csswg/css-font-loading/#font-face-set-check)方法）并追踪其下载进度，因此您还可以为在网页上渲染文本定义一种自定义策略：
+
+* 您可以在获得字体前暂停所有文本渲染。
+* 您可以为每种字体实现自定义超时。
+* 您可以利用后备字体解除渲染阻止，并在获得字体后注入使用所需字体的新样式。
+
+最重要的是，您还可以混用和匹配上述策略来适应网页上的不同内容。例如，在获得字体前延迟某些部分的文本渲染；使用后备字体，然后在字体下载完成后进行重新渲染；指定不同的超时，等等。
+
+注：在某些浏览器上，Font Loading API 仍[处于开发阶段](http://caniuse.com/#feat=font-loading)。可以考虑使用[FontLoader polyfill](https://github.com/bramstein/fontloader)或[webfontloader 内容库](https://github.com/typekit/webfontloader)来提供类似功能，尽管附加的 JavaScript 依赖关系会产生开销。
+
+### 通过内联优化字体渲染 {#_8}
+
+使用 Font Loading API 消除“空白文本问题”的简单替代策略是将字体内容内联到 CSS 样式表内：
+
+* 浏览器会使用高优先级自动下载具有匹配媒体查询的 CSS 样式表，因为需要使用它们来构建 CSSOM。
+* 将字体数据内联到 CSS 样式表中会强制浏览器使用高优先级下载字体，而不等待渲染树。即它起到的是手动替换默认延迟加载行为的作用。
+
+内联策略不那么灵活，不允许您为不同的内容定义自定义超时或渲染策略，但不失为是一种适用于所有浏览器并且简单而又可靠的解决方案。为获得最佳效果，请将内联字体分成独立的样式表，并为它们提供较长的 max-age。这样一来，在您更新 CSS 时，就不会强制访问者重新下载字体。
+
+注：有选择地使用内联。回想一下，@font-face 使用延迟加载行为来避免下载多余的字体变体和子集的原因。此外，通过主动式内联增加 CSS 的大小将对您的[关键渲染路径](../critical-rendering-path/index.html)产生不良影响。浏览器必须下载所有 CSS，然后才能构造 CSSOM，构建渲染树，以及将页面内容渲染到屏幕上。
+
+### 通过 HTTP 缓存优化字体重复使用 {#http}
+
+字体资源通常是不会频繁更新的静态资源。因此，它们非常适合较长的 max-age 到期 - 确保您为所有字体资源同时指定了[条件 ETag 标头](http-caching.html#validating-cached-responses-with-etags)和[最佳 Cache-Control 策略](http-caching.html#cache-control)。
+
+您无需在 localStorage 中或通过其他机制存储字体，其中的每一种机制都有各自的性能缺陷。 浏览器的 HTTP 缓存与 Font Loading API 或 webfontloader 内容库相结合，实现了最佳并且最可靠的机制来向浏览器提供字体资源。
+
+## 优化检查清单 {#_9}
+
+与普遍的观点相反，使用网页字体不需要延迟网页渲染，也不会对其他性能指标产生不良影响。在充分优化的情况下使用字体可大幅提升总体用户体验：出色的品牌推广，改进的可读性、易用性和可搜索性，并一直提供可扩展的多分辨率解决方案，能够出色地适应各种屏幕格式和分辨率。不要害怕使用网页字体！
+
+不过，直接实现可能招致下载内容庞大和不必要的延迟。您需要通过对字体资产本身及其在网页上的获取和使用方式进行优化来为浏览器提供协助的环节。
+
+* **审核并监控您的字体使用**：不要在网页上使用过多字体，并且对于每一种字体，最大限度减少使用的变体数量。这将有助于为您的用户带来更加一致且更加快速的体验。
+* **对您的字体资源进行子集内嵌**：许多字体都可进行子集内嵌，或者拆分成多个 unicode-range 以仅提供特定网页需要的字形。这样就减小了文件大小，并提高了资源的下载速度。不过，在定义子集时要注意针对字体重复使用进行优化。例如，您一定不希望在每个网页上都下载不同但重叠的字符集。最好根据文字系统（例如拉丁文、西里尔文等）进行子集内嵌。
+* **向每个浏览器提供优化过的字体格式**：每一种字体都应以 WOFF2、WOFF、EOT 和 TTF 格式提供。务必对 EOT 和 TTF 格式应用 GZIP 压缩，因为默认情况下不会对它们进行压缩。
+* **指定重新验证和最佳缓存策略**：字体是不经常更新的静态资源。确保您的服务器提供长期的 max-age 时间戳和重新验证令牌，以实现不同网页之间高效的字体重复使用。
+* **使用 Font Loading API 来优化关键渲染路径**：默认延迟加载行为可能导致文本渲染延迟。您可以通过 Font Loading API 为特定字体替换这一行为，以及为网页上的不同内容指定自定义渲染和超时策略。对于不支持该 API 的较旧浏览器，您可以使用网页字体加载程序 JavaScript 内容库或使用 CSS 内联策略。
+
+
+
