@@ -81,6 +81,7 @@
     * [优化内容效率](5xing-neng/jia-zai-xing-neng/you-hua-nei-rong-xiao-lv.md)
       * [避免不必要的下载](5xing-neng/jia-zai-xing-neng/you-hua-nei-rong-xiao-lv/bi-mian-bu-bi-yao-de-xia-zai.md)
       * [优化基于文本的资产的编码和传送大小](5xing-neng/jia-zai-xing-neng/you-hua-nei-rong-xiao-lv/you-hua-ji-yu-wen-ben-de-zi-chan-de-bian-ma-he-chuan-song-da-xiao.md)
+      * [图像优化](5xing-neng/jia-zai-xing-neng/you-hua-nei-rong-xiao-lv/tu-xiang-you-hua.md)
   * 5.2 渲染性能
 * 6.安全
 * 7.相关技术
