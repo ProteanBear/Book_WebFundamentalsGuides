@@ -100,6 +100,7 @@
     * [优化 JavaScript 执行](5xing-neng/52-xuan-ran-xing-neng/you-huajavascript-zhi-xing.md)
     * [缩小样式计算的范围并降低其复杂性](5xing-neng/52-xuan-ran-xing-neng/suo-xiao-yang-shi-ji-suan-de-fan-wei-bing-jiang-di-qi-fu-za-xing.md)
     * [避免大型、复杂的布局和布局抖动](5xing-neng/52-xuan-ran-xing-neng/bi-mian-da-xing-3001-fu-za-de-bu-ju-he-bu-ju-dou-dong.md)
+    * [简化绘制的复杂度、减小绘制区域](5xing-neng/52-xuan-ran-xing-neng/jian-hua-hui-zhi-de-fu-za-du-3001-jian-xiao-hui-zhi-qu-yu.md)
 * 6.安全
 * 7.相关技术
 * 附：词汇表
