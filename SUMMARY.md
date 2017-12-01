@@ -97,6 +97,7 @@
     * [HTTP/2 简介](5xing-neng/jia-zai-xing-neng/http2-jian-jie.md)
     * [PRPL 模式](5xing-neng/jia-zai-xing-neng/prpl-mo-shi.md)
   * [5.2 渲染性能](5xing-neng/52-xuan-ran-xing-neng.md)
+    * [优化 JavaScript 执行](5xing-neng/52-xuan-ran-xing-neng/you-huajavascript-zhi-xing.md)
 * 6.安全
 * 7.相关技术
 * 附：词汇表
