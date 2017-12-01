@@ -24,6 +24,8 @@
     * [焦点：使用 tabindex](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/jiao-dian-ff1a-shi-yong-tabindex.md)
     * [语义：简介](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-ff1a-jian-jie.md)
     * [语义：无障碍树](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-ff1a-wu-zhang-ai-shu.md)
+    * [语义：图像的替代文本](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-ff1a-tu-xiang-de-ti-dai-wen-ben.md)
+    * [语义和内容导航](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-he-nei-rong-dao-hang.md)
   * [2.3 动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua.md)
     * [CSS动画 vs JavaScript动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua/cssdong-huavs-javascript-dong-hua.md)
     * [缓动的基础知识](she-ji-yu-yong-hu-ti-yan/23-dong-hua/huan-dong-de-ji-chu-zhi-shi.md)
