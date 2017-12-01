@@ -24,6 +24,7 @@
     * [语义和内容导航](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-he-nei-rong-dao-hang.md)
     * [ARIA：简介](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/ariaff1a-jian-jie.md)
     * [ARIA：标签和关系](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/ariabiao-qian-he-guan-xi.md)
+    * [ARIA：隐藏和更新内容](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/ariaff1a-yin-cang-he-geng-xin-nei-rong.md)
   * [2.3 动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua.md)
     * [CSS动画 vs JavaScript动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua/cssdong-huavs-javascript-dong-hua.md)
     * [缓动的基础知识](she-ji-yu-yong-hu-ti-yan/23-dong-hua/huan-dong-de-ji-chu-zhi-shi.md)
