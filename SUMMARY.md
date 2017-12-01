@@ -87,6 +87,7 @@
     * [离线指南](5xing-neng/jia-zai-xing-neng/li-xian-zhi-nan.md)
       * [网页储存](5xing-neng/jia-zai-xing-neng/li-xian-zhi-nan/wang-ye-chu-cun.md)
         * [Progressive Web App 的离线存储](5xing-neng/jia-zai-xing-neng/li-xian-zhi-nan/wang-ye-chu-cun/progressive-web-app-de-li-xian-cun-chu.md)
+        * [Using the Cache API](5xing-neng/jia-zai-xing-neng/li-xian-zhi-nan/wang-ye-chu-cun/using-the-cache-api.md)
   * 5.2 渲染性能
 * 6.安全
 * 7.相关技术
