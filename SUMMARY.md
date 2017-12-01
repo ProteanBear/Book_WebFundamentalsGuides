@@ -23,6 +23,7 @@
     * [如何进行无障碍评估](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/ru-he-jin-xing-wu-zhang-ai-ping-gu.md)
     * [团队的无障碍努力](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/tuan-dui-de-wu-zhang-ai-nu-li.md)
     * [焦点：简介](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/jiao-dian-ff1a-jian-jie.md)
+    * [焦点：DOM顺序至关重要](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/jiao-dian-ff1a-dom-shun-xu-zhi-guan-zhong-yao.md)
   * [2.3 动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua.md)
     * [CSS动画 vs JavaScript动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua/cssdong-huavs-javascript-dong-hua.md)
     * [缓动的基础知识](she-ji-yu-yong-hu-ti-yan/23-dong-hua/huan-dong-de-ji-chu-zhi-shi.md)
