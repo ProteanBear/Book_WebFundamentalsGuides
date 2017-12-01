@@ -85,8 +85,8 @@
       * [网页字体优化](5xing-neng/jia-zai-xing-neng/you-hua-nei-rong-xiao-lv/wang-ye-zi-ti-you-hua.md)
       * [HTTP 缓存](5xing-neng/jia-zai-xing-neng/you-hua-nei-rong-xiao-lv/http-huan-cun.md)
     * [离线指南](5xing-neng/jia-zai-xing-neng/li-xian-zhi-nan.md)
-    * [网页存储](5xing-neng/jia-zai-xing-neng/wang-ye-cun-chu.md)
-      * [Progressive Web App 的离线存储](5xing-neng/jia-zai-xing-neng/wang-ye-cun-chu/progressive-web-app-de-li-xian-cun-chu.md)
+      * [网页储存](5xing-neng/jia-zai-xing-neng/li-xian-zhi-nan/wang-ye-chu-cun.md)
+        * [Progressive Web App 的离线存储](5xing-neng/jia-zai-xing-neng/li-xian-zhi-nan/wang-ye-chu-cun/progressive-web-app-de-li-xian-cun-chu.md)
   * 5.2 渲染性能
 * 6.安全
 * 7.相关技术
