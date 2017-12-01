@@ -23,6 +23,7 @@
     * [语义：图像的替代文本](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-ff1a-tu-xiang-de-ti-dai-wen-ben.md)
     * [语义和内容导航](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-he-nei-rong-dao-hang.md)
     * [ARIA：简介](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/ariaff1a-jian-jie.md)
+    * [ARIA：标签和关系](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/ariabiao-qian-he-guan-xi.md)
   * [2.3 动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua.md)
     * [CSS动画 vs JavaScript动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua/cssdong-huavs-javascript-dong-hua.md)
     * [缓动的基础知识](she-ji-yu-yong-hu-ti-yan/23-dong-hua/huan-dong-de-ji-chu-zhi-shi.md)
@@ -36,6 +37,7 @@
     * [自适应网页设计模式](she-ji-yu-yong-hu-ti-yan/zi-shi-ying-wang-ye-she-ji-mo-shi.md)
     * [图像](she-ji-yu-yong-hu-ti-yan/tu-xiang.md)
     * [多设备内容](she-ji-yu-yong-hu-ti-yan/duo-she-bei-nei-rong.md)
+  * ARIA标签和关系
 * [3.整合与互动](3zheng-he-yu-hu-dong.md)
   * [3.1 添加到主屏幕](3zheng-he-yu-hu-dong/31-tian-jia-dao-zhu-ping-mu.md)
     * [网络应用安装横幅](3zheng-he-yu-hu-dong/31-tian-jia-dao-zhu-ping-mu/wang-luo-ying-yong-an-zhuang-heng-fu.md)
