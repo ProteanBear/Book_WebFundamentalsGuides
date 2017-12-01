@@ -91,6 +91,7 @@
     * [网页储存：Using the Cache API](5xing-neng/jia-zai-xing-neng/li-xian-zhi-nan/wang-ye-chu-cun/using-the-cache-api.md)
     * [Offline UX 注意事项](5xing-neng/jia-zai-xing-neng/li-xian-zhi-nan/offline-ux-zhu-yi-shi-xiang.md)
     * [顺序加载：关键渲染路径](5xing-neng/jia-zai-xing-neng/shun-xu-jia-zai-ff1a-guan-jian-xuan-ran-lu-jing.md)
+    * [顺序加载：评估关键渲染路径](5xing-neng/jia-zai-xing-neng/shun-xu-jia-zai-ff1a-ping-gu-guan-jian-xuan-ran-lu-jing.md)
   * 5.2 渲染性能
 * 6.安全
 * 7.相关技术
