@@ -98,6 +98,7 @@
     * [PRPL 模式](5xing-neng/jia-zai-xing-neng/prpl-mo-shi.md)
   * [5.2 渲染性能](5xing-neng/52-xuan-ran-xing-neng.md)
     * [优化 JavaScript 执行](5xing-neng/52-xuan-ran-xing-neng/you-huajavascript-zhi-xing.md)
+    * [缩小样式计算的范围并降低其复杂性](5xing-neng/52-xuan-ran-xing-neng/suo-xiao-yang-shi-ji-suan-de-fan-wei-bing-jiang-di-qi-fu-za-xing.md)
 * 6.安全
 * 7.相关技术
 * 附：词汇表
