@@ -94,6 +94,7 @@
     * [关键渲染路径：评估](5xing-neng/jia-zai-xing-neng/shun-xu-jia-zai-ff1a-ping-gu-guan-jian-xuan-ran-lu-jing.md)
     * [关键渲染路径：性能分析](5xing-neng/jia-zai-xing-neng/guan-jian-xuan-ran-lu-jing-ff1a-xing-neng-fen-xi.md)
     * [关键渲染路径：优化](5xing-neng/jia-zai-xing-neng/guan-jian-xuan-ran-lu-jing-ff1a-you-hua.md)
+    * [HTTP/2 简介](5xing-neng/jia-zai-xing-neng/http2-jian-jie.md)
   * 5.2 渲染性能
 * 6.安全
 * 7.相关技术
