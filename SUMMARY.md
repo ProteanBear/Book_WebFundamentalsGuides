@@ -22,7 +22,7 @@
     * [焦点：简介](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/jiao-dian-ff1a-jian-jie.md)
     * [焦点：DOM顺序至关重要](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/jiao-dian-ff1a-dom-shun-xu-zhi-guan-zhong-yao.md)
     * [焦点：使用 tabindex](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/jiao-dian-ff1a-shi-yong-tabindex.md)
-    * 语义：无障碍树
+    * [语义：简介](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-ff1a-jian-jie.md)
     * [语义：简介](she-ji-yu-yong-hu-ti-yan/22-wu-zhang-ai-gong-neng/yu-yi-ff1a-jian-jie.md)
   * [2.3 动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua.md)
     * [CSS动画 vs JavaScript动画](she-ji-yu-yong-hu-ti-yan/23-dong-hua/cssdong-huavs-javascript-dong-hua.md)
