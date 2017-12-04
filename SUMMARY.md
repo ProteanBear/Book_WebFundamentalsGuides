@@ -76,7 +76,7 @@
     * [What is EME?](duo-mei-ti-yu-xu-ni-xian-shi/what-is-eme.md)
     * [Media Source Extensions](duo-mei-ti-yu-xu-ni-xian-shi/media-source-extensions.md)
     * [Media Source Extensions for Audio](duo-mei-ti-yu-xu-ni-xian-shi/media-source-extensions-for-audio.md)
-    * Fast Playback with Video Preload
+    * [Fast Playback with Video Preload](duo-mei-ti-yu-xu-ni-xian-shi/fast-playback-with-video-preload.md)
   * 4.2 录制与保存
     * [录制用户的音频](duo-mei-ti-yu-xu-ni-xian-shi/lu-zhi-yong-hu-de-yin-pin.md)
     * [采集用户的图像](duo-mei-ti-yu-xu-ni-xian-shi/cai-ji-yong-hu-de-tu-xiang.md)
