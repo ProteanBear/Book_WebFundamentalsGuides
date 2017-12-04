@@ -74,7 +74,7 @@
     * [视频](duo-mei-ti-yu-xu-ni-xian-shi/shi-pin.md)
     * [Mobile Web Video Playback](duo-mei-ti-yu-xu-ni-xian-shi/mobile-web-video-playback.md)
     * [What is EME?](duo-mei-ti-yu-xu-ni-xian-shi/what-is-eme.md)
-    * Media Source Extensions
+    * [Media Source Extensions](duo-mei-ti-yu-xu-ni-xian-shi/media-source-extensions.md)
     * Media Source Extensions for Audio
     * Fast Playback with Video Preload
   * 4.2 录制与保存
