@@ -103,7 +103,7 @@
     * [简化绘制的复杂度、减小绘制区域](5xing-neng/52-xuan-ran-xing-neng/jian-hua-hui-zhi-de-fu-za-du-3001-jian-xiao-hui-zhi-qu-yu.md)
     * [坚持仅合成器的属性和管理层计数](5xing-neng/52-xuan-ran-xing-neng/jian-chi-jin-he-cheng-qi-de-shu-xing-he-guan-li-ceng-ji-shu.md)
     * [使输入处理程序去除抖动](5xing-neng/52-xuan-ran-xing-neng/shi-shu-ru-chu-li-cheng-xu-qu-chu-dou-dong.md)
-* 6.安全
+* [6.安全](6an-quan.md)
 * 7.相关技术
 * 附：词汇表
 
