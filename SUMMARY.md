@@ -104,6 +104,7 @@
     * [坚持仅合成器的属性和管理层计数](5xing-neng/52-xuan-ran-xing-neng/jian-chi-jin-he-cheng-qi-de-shu-xing-he-guan-li-ceng-ji-shu.md)
     * [使输入处理程序去除抖动](5xing-neng/52-xuan-ran-xing-neng/shi-shu-ru-chu-li-cheng-xu-qu-chu-dou-dong.md)
 * [6.安全](6an-quan.md)
+  * [6.1 内容安全政策](6an-quan/61-nei-rong-an-quan-zheng-ce.md)
 * 7.相关技术
 * 附：词汇表
 
