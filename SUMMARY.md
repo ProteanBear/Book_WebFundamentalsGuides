@@ -80,6 +80,7 @@
   * 4.2 录制与保存
     * [录制用户的音频](duo-mei-ti-yu-xu-ni-xian-shi/lu-zhi-yong-hu-de-yin-pin.md)
     * [采集用户的图像](duo-mei-ti-yu-xu-ni-xian-shi/cai-ji-yong-hu-de-tu-xiang.md)
+    * [录制用户的视频](duo-mei-ti-yu-xu-ni-xian-shi/lu-zhi-yong-hu-de-shi-pin.md)
   * 4.3 操作媒体文件
   * 4.4 虚拟现实
 * [5.性能](5xing-neng.md)
