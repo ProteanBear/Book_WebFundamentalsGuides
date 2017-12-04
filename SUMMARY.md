@@ -82,6 +82,10 @@
     * [采集用户的图像](duo-mei-ti-yu-xu-ni-xian-shi/cai-ji-yong-hu-de-tu-xiang.md)
     * [录制用户的视频](duo-mei-ti-yu-xu-ni-xian-shi/lu-zhi-yong-hu-de-shi-pin.md)
   * 4.3 操作媒体文件
+    * [Application Primers](duo-mei-ti-yu-xu-ni-xian-shi/application-primers.md)
+    * [From Raw Video to Web Ready](duo-mei-ti-yu-xu-ni-xian-shi/from-raw-video-to-web-ready.md)
+    * [Real-Time Effects For Images and Video](duo-mei-ti-yu-xu-ni-xian-shi/real-time-effects-for-images-and-video.md)
+    * [Media Manipulation Cheat Sheet](duo-mei-ti-yu-xu-ni-xian-shi/media-manipulation-cheat-sheet.md)
   * 4.4 虚拟现实
 * [5.性能](5xing-neng.md)
   * [5.1 加载性能](5xing-neng/jia-zai-xing-neng.md)
