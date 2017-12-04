@@ -72,6 +72,7 @@
 * [4.多媒体与虚拟现实](duo-mei-ti-yu-xu-ni-xian-shi.md)
   * [4.1 视频与音频播放](duo-mei-ti-yu-xu-ni-xian-shi/41-shi-pin-yu-yin-pin-bo-fang.md)
     * [视频](duo-mei-ti-yu-xu-ni-xian-shi/shi-pin.md)
+    * [Mobile Web Video Playback](duo-mei-ti-yu-xu-ni-xian-shi/mobile-web-video-playback.md)
   * 4.2 录制与保存
   * 4.3 操作媒体文件
   * 4.4 虚拟现实
