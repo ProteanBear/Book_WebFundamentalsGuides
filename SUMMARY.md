@@ -89,6 +89,7 @@
   * [4.4 虚拟现实](duo-mei-ti-yu-xu-ni-xian-shi/44-xu-ni-xian-shi.md)
     * [WebVR 状态和注意事项](duo-mei-ti-yu-xu-ni-xian-shi/44-xu-ni-xian-shi/webvr-zhuang-tai-he-zhu-yi-shi-xiang.md)
     * [Seeing the Web from a VR Perspective](duo-mei-ti-yu-xu-ni-xian-shi/44-xu-ni-xian-shi/seeing-the-web-from-a-vr-perspective.md)
+    * [WebVR 入门指南](duo-mei-ti-yu-xu-ni-xian-shi/44-xu-ni-xian-shi/webvr-ru-men-zhi-nan.md)
 * [5.性能](5xing-neng.md)
   * [5.1 加载性能](5xing-neng/jia-zai-xing-neng.md)
     * [了解低带宽和高延迟](5xing-neng/jia-zai-xing-neng/le-jie-di-dai-kuan-he-gao-yan-chi.md)
