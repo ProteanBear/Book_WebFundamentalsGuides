@@ -73,7 +73,12 @@
   * [4.1 视频与音频播放](duo-mei-ti-yu-xu-ni-xian-shi/41-shi-pin-yu-yin-pin-bo-fang.md)
     * [视频](duo-mei-ti-yu-xu-ni-xian-shi/shi-pin.md)
     * [Mobile Web Video Playback](duo-mei-ti-yu-xu-ni-xian-shi/mobile-web-video-playback.md)
+    * What is EME?
+    * Media Source Extensions
+    * Media Source Extensions for Audio
+    * Fast Playback with Video Preload
   * 4.2 录制与保存
+    * [录制用户的音频](duo-mei-ti-yu-xu-ni-xian-shi/lu-zhi-yong-hu-de-yin-pin.md)
   * 4.3 操作媒体文件
   * 4.4 虚拟现实
 * [5.性能](5xing-neng.md)
