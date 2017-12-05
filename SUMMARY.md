@@ -135,5 +135,6 @@
     * [Promise](7xiang-guan-ji-zhu/promise.md)
     * [服务工作线程：简介](7xiang-guan-ji-zhu/fu-wu-gong-zuo-xian-cheng-ff1a-jian-jie.md)
     * [服务工作线程：生命周期](7xiang-guan-ji-zhu/fu-wu-gong-zuo-xian-cheng-ff1a-sheng-ming-zhou-qi.md)
+    * [服务工作线程：注册](7xiang-guan-ji-zhu/fu-wu-gong-zuo-xian-cheng-ff1a-zhu-ce.md)
 * [附：词汇表](fu-ff1a-ci-hui-biao.md)
 
