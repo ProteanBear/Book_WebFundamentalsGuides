@@ -217,6 +217,7 @@ self.addEventListener('fetch', function(event) {
 3. 确保响应有效。
 
 4. 检查并确保响应的状态为`200`。
+
 5. 确保响应类型为**basic**，亦即由自身发起的请求。 这意味着，对第三方资产的请求不会添加到缓存。
 6. 如果通过检查，则[克隆](https://fetch.spec.whatwg.org/#dom-response-clone)响应。这样做的原因在于，该响应是[Stream](https://streams.spec.whatwg.org/)，因此主体只能使用一次。由于我们想要返回能被浏览器使用的响应，并将其传递到缓存以供使用，因此需要克隆一份副本。我们将一份发送给浏览器，另一份则保留在缓存。
 
@@ -315,13 +316,14 @@ cache.addAll(urlsToPrefetch.map(function(urlToPrefetch) {
 在`srcset`图像中，我们有一些像这样的标记：
 
 ```html
-
+<img src="image-src.png" srcset="image-src.png 1x, image-2x.png 2x" />
 ```
 
 如果我们使用的是 2x 显示屏，浏览器将会选择下载`image-2x.png`。如果我们处于离线状态，您可以对请求执行`.catch()`并返回`image-src.png`（如已缓存）。但是，浏览器会期望 2x 屏幕上的图像有额外的像素，这样图像将显示为 200x200 CSS 像素而不是 400x400 CSS 像素。解决该问题的唯一办法是设定固定的图像高度和宽度。
 
 ```html
-
+<img src="image-src.png" srcset="image-src.png 1x, image-2x.png 2x"
+ style="width:400px; height: 400px;" />
 ```
 
 对于要用于艺术指导的`<picture>`元素，这会变得相当困难，而且很大程度上取决于图像的创建和使用方式，但是您可以使用类似于 srcset 的方法。
