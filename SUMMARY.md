@@ -127,5 +127,6 @@
     * [防止混合内容](6an-quan/63-hun-he-nei-rong/fang-zhi-hun-he-nei-rong.md)
 * [7.相关技术](7xiang-guan-ji-zhu.md)
   * [7.1 HTML&DOM 自定义组件](7xiang-guan-ji-zhu/71-htmlanddom-zi-ding-yi-zu-jian.md)
+    * [自定义元素](7xiang-guan-ji-zhu/71-htmlanddom-zi-ding-yi-zu-jian/zi-ding-yi-yuan-su.md)
 * [附：词汇表](fu-ff1a-ci-hui-biao.md)
 
