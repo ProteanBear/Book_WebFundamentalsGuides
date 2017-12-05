@@ -10,7 +10,7 @@
 
 文档内容发布于gitbook，请点击下面的链接阅读或者下载电子版本:
 
-* 在线阅读
+* [在线阅读](https://www.gitbook.com/read/book/proteanbear/web-fundamentals)
   * 国外服务器：gitbook提供的托管，服务器在国外，速度比较慢，偶尔被墙，HTTPS
 * 下载pdf格式
 * 下载mobi格式
