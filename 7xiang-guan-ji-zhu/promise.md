@@ -225,169 +225,501 @@ jsPromise.then(function(response) {
 
 旧 API 将更新为使用 promise，如有可能，采用后向兼容的方式。`XMLHttpRequest`是主要候选对象，不过，我们可编写一个作出 GET 请求的简单函数：
 
-```
-function
-get
-(
-url
-)
-{
+```js
+function get(url) {
+  // Return a new promise.
+  return new Promise(function(resolve, reject) {
+    // Do the usual XHR stuff
+    var req = new XMLHttpRequest();
+    req.open('GET', url);
 
+    req.onload = function() {
+      // This is called even on 404 etc
+      // so check the status
+      if (req.status == 200) {
+        // Resolve the promise with the response text
+        resolve(req.response);
+      }
+      else {
+        // Otherwise reject with the status text
+        // which will hopefully be a meaningful error
+        reject(Error(req.statusText));
+      }
+    };
 
-// Return a new promise.
+    // Handle network errors
+    req.onerror = function() {
+      reject(Error("Network Error"));
+    };
 
-
-return
-new
-Promise
-(
-function
-(
-resolve
-,
- reject
-)
-{
-
-
-// Do the usual XHR stuff
-
-
-var
- req 
-=
-new
-XMLHttpRequest
-();
-
-
-    req
-.
-open
-(
-'GET'
-,
- url
-);
-
-
-
-
-    req
-.
-onload 
-=
-function
-()
-{
-
-
-// This is called even on 404 etc
-
-
-// so check the status
-
-
-if
-(
-req
-.
-status 
-==
-200
-)
-{
-
-
-// Resolve the promise with the response text
-
-
-        resolve
-(
-req
-.
-response
-);
-
-
+    // Make the request
+    req.send();
+  });
 }
-
-
-else
-{
-
-
-// Otherwise reject with the status text
-
-
-// which will hopefully be a meaningful error
-
-
-        reject
-(
-Error
-(
-req
-.
-statusText
-));
-
-
-}
-
-
-};
-
-
-
-
-// Handle network errors
-
-
-    req
-.
-onerror 
-=
-function
-()
-{
-
-
-      reject
-(
-Error
-(
-"Network Error"
-));
-
-
-};
-
-
-
-
-// Make the request
-
-
-    req
-.
-send
-();
-
-
-ß});
-
-
-}
-
-
 ```
 
 现在让我们来使用这一功能：
 
 ```js
-
+get('story.json').then(function(response) {
+  console.log("Success!", response);
+}, function(error) {
+  console.error("Failed!", error);
+})
 ```
 
 [点击此处了解实际操作](https://github.com/googlesamples/web-fundamentals/blob/gh-pages/fundamentals/getting-started/primers/story.json)，检查 DevTools 中的控制台以查看结果。现在我们无需手动键入`XMLHttpRequest`即可作出 HTTP 请求，这真是太赞了，因为越少看到令人讨厌的书写得参差不齐的`XMLHttpRequest`，我就越开心。
+
+## 链接 {#_4}
+
+`then()`不是最终部分，您可以将各个`then`链接在一起来改变值，或依次运行额外的异步操作。
+
+### 改变值 {#_5}
+
+只需返回新值即可改变值：
+
+```js
+var promise = new Promise(function(resolve, reject) {
+  resolve(1);
+});
+
+promise.then(function(val) {
+  console.log(val); // 1
+  return val + 2;
+}).then(function(val) {
+  console.log(val); // 3
+})
+```
+
+举一个实际的例子，让我们回到：
+
+```js
+get('story.json').then(function(response) {
+  console.log("Success!", response);
+})
+```
+
+这里的 response 是 JSON，但是我们当前收到的是其纯文本。我们可以将 get 函数修改为使用 JSON[`responseType`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#responseType)，不过我们也可以使用 promise 来解决这个问题：
+
+```js
+get('story.json').then(function(response) {
+  return JSON.parse(response);
+}).then(function(response) {
+  console.log("Yey JSON!", response);
+})
+```
+
+由于`JSON.parse()`采用单一参数并返回改变的值，因此我们可以将其简化为：
+
+```js
+get('story.json').then(JSON.parse).then(function(response) {
+  console.log("Yey JSON!", response);
+})
+```
+
+[了解实际操作](https://github.com/googlesamples/web-fundamentals/blob/gh-pages/fundamentals/getting-started/primers/story.json)，检查 DevTools 中的控制台以查看结果。实际上，我们可以让`getJSON()`函数更简单：
+
+```js
+function getJSON(url) {
+  return get(url).then(JSON.parse);
+}
+```
+
+`getJSON()`仍返回一个 promise，该 promise 获取 URL 后将 response 解析为 JSON。
+
+### 异步操作队列 {#_6}
+
+您还可以链接多个`then`，以便按顺序运行异步操作。
+
+当您从`then()`回调中返回某些内容时，这有点儿神奇。如果返回一个值，则会以该值调用下一个`then()`。但是，如果您返回类似于 promise 的内容，下一个`then()`则会等待，并仅在 promise 产生结果（成功/失败）时调用。例如：
+
+```js
+getJSON('story.json').then(function(story) {
+  return getJSON(story.chapterUrls[0]);
+}).then(function(chapter1) {
+  console.log("Got chapter 1!", chapter1);
+})
+```
+
+这里我们向`story.json`发出异步请求，这可让我们请求一组网址，随后我们请求其中的第一个。这是 promise 从简单回调模式中脱颖而出的真正原因所在。
+
+您甚至可以采用更简短的方法来获得章节内容：
+
+```js
+var storyPromise;
+
+function getChapter(i) {
+  storyPromise = storyPromise || getJSON('story.json');
+
+  return storyPromise.then(function(story) {
+    return getJSON(story.chapterUrls[i]);
+  })
+}
+
+// and using it is simple:
+getChapter(0).then(function(chapter) {
+  console.log(chapter);
+  return getChapter(1);
+}).then(function(chapter) {
+  console.log(chapter);
+})
+```
+
+直到`getChapter`被调用，我们才下载`story.json`，但是下次`getChapter`被调用时，我们重复使用 story romise，因此`story.json`仅获取一次。耶，Promise！
+
+## 错误处理 {#_7}
+
+正如我们之前所看到的，`then()`包含两个参数：一个用于成功，一个用于失败（按照 promise 中的说法，即执行和拒绝）：
+
+```js
+get('story.json').then(function(response) {
+  console.log("Success!", response);
+}, function(error) {
+  console.log("Failed!", error);
+})
+```
+
+您还可以使用`catch()`：
+
+```js
+get('story.json').then(function(response) {
+  console.log("Success!", response);
+}).catch(function(error) {
+  console.log("Failed!", error);
+})
+```
+
+`catch()`没有任何特殊之处，它只是`then(undefined, func)`的锦上添花，但可读性更强。注意，以上两个代码示例行为并不相同，后者相当于：
+
+```js
+get('story.json').then(function(response) {
+  console.log("Success!", response);
+}).then(undefined, function(error) {
+  console.log("Failed!", error);
+})
+```
+
+两者之间的差异虽然很微小，但非常有用。Promise 拒绝后，将跳至带有拒绝回调的下一个`then()`（或具有相同功能的`catch()`）。如果是`then(func1, func2)`，则`func1`或`func2`中的一个将被调用，而不会二者均被调用。但如果是`then(func1).catch(func2)`，则在`func1`拒绝时两者均被调用，因为它们在该链中是单独的步骤。看看下面的代码：
+
+```js
+asyncThing1().then(function() {
+  return asyncThing2();
+}).then(function() {
+  return asyncThing3();
+}).catch(function(err) {
+  return asyncRecovery1();
+}).then(function() {
+  return asyncThing4();
+}, function(err) {
+  return asyncRecovery2();
+}).catch(function(err) {
+  console.log("Don't worry about it");
+}).then(function() {
+  console.log("All done!");
+})
+```
+
+以上流程与常规的 JavaScript try/catch 非常类似，在“try”中发生的错误直接进入`catch()`块。以下是上述代码的流程图形式（因为我喜欢流程图）：
+
+蓝线表示执行的 promise 路径，红路表示拒绝的 promise 路径。
+
+### JavaScript 异常和 promise {#javascript_promise}
+
+当 promise 被明确拒绝时，会发生拒绝；但是如果是在构造函数回调中引发的错误，则会隐式拒绝。
+
+```js
+var jsonPromise = new Promise(function(resolve, reject) {
+  // JSON.parse throws an error if you feed it some
+  // invalid JSON, so this implicitly rejects:
+  resolve(JSON.parse("This ain't JSON"));
+});
+
+jsonPromise.then(function(data) {
+  // This never happens:
+  console.log("It worked!", data);
+}).catch(function(err) {
+  // Instead, this happens:
+  console.log("It failed!", err);
+})
+```
+
+这意味着，在 promise 构造函数回调内部执行所有与 promise 相关的任务很有用，因为错误会自动捕获并进而拒绝。
+
+对于在`then()`回调中引发的错误也是如此。
+
+```js
+get('/').then(JSON.parse).then(function() {
+  // This never happens, '/' is an HTML page, not JSON
+  // so JSON.parse throws
+  console.log("It worked!", data);
+}).catch(function(err) {
+  // Instead, this happens:
+  console.log("It failed!", err);
+})
+```
+
+### 错误处理实践 {#_8}
+
+在我们的故事和章节中，我们可使用 catch 来向用户显示错误：
+
+```js
+getJSON('story.json').then(function(story) {
+  return getJSON(story.chapterUrls[0]);
+}).then(function(chapter1) {
+  addHtmlToPage(chapter1.html);
+}).catch(function() {
+  addTextToPage("Failed to show chapter");
+}).then(function() {
+  document.querySelector('.spinner').style.display = 'none';
+})
+```
+
+如果获取`story.chapterUrls[0]`失败（例如，http 500 或用户离线），它将跳过所有后续成功回调，包括`getJSON()`中尝试将响应解析为 JSON 的回调，而且跳过将 chapter1.html 添加到页面的回调。然后，它将移至 catch 回调。因此，如果任一前述操作失败，“Failed to show chapter”将会添加到页面。
+
+与 JavaScript 的 try/catch 一样，错误被捕获而后续代码继续执行，因此，转环总是被隐藏，这正是我们想要的。以上是下面一组代码的拦截异步版本：
+
+```js
+try {
+  var story = getJSONSync('story.json');
+  var chapter1 = getJSONSync(story.chapterUrls[0]);
+  addHtmlToPage(chapter1.html);
+}
+catch (e) {
+  addTextToPage("Failed to show chapter");
+}
+document.querySelector('.spinner').style.display = 'none'
+```
+
+您可能想出于记录目的而`catch()`，而无需从错误中恢复。为此，只需再次抛出错误。我们可以使用`getJSON()`方法执行此操作：
+
+```js
+function getJSON(url) {
+  return get(url).then(JSON.parse).catch(function(err) {
+    console.log("getJSON failed for", url, err);
+    throw err;
+  });
+}
+```
+
+至此，我们已获取其中一个章节，但我们想要所有的章节。让我们尝试来实现。
+
+## 并行式和顺序式：两者兼得 {#_9}
+
+异步并不容易。如果您觉得难以着手，可尝试按照同步的方式编写代码。在本例中：
+
+```
+try
+{
+
+
+var
+ story 
+=
+ getJSONSync
+(
+'story.json'
+);
+
+
+  addHtmlToPage
+(
+story
+.
+heading
+);
+
+
+
+
+  story
+.
+chapterUrls
+.
+forEach
+(
+function
+(
+chapterUrl
+)
+{
+
+
+var
+ chapter 
+=
+ getJSONSync
+(
+chapterUrl
+);
+
+
+    addHtmlToPage
+(
+chapter
+.
+html
+);
+
+
+});
+
+
+
+
+  addTextToPage
+(
+"All done"
+);
+
+
+}
+
+
+catch
+(
+err
+)
+{
+
+
+  addTextToPage
+(
+"Argh, broken: "
++
+ err
+.
+message
+);
+
+
+}
+
+
+
+
+document
+.
+querySelector
+(
+'.spinner'
+).
+style
+.
+display 
+=
+'none'
+
+
+```
+
+[试一下](https://googlesamples.github.io/web-fundamentals/fundamentals/getting-started/primers/sync-example.html)
+
+这样可行（查看[代码](https://github.com/googlesamples/web-fundamentals/blob/gh-pages/fundamentals/getting-started/primers/sync-example.html)）！ 但这是同步的情况，而且在内容下载时浏览器会被锁定。要使其异步，我们使用`then()`来依次执行任务。
+
+```
+getJSON
+(
+'story.json'
+).
+then
+(
+function
+(
+story
+)
+{
+
+
+  addHtmlToPage
+(
+story
+.
+heading
+);
+
+
+
+
+// TODO: for each url in story.chapterUrls, fetch 
+&
+amp; display
+
+
+}).
+then
+(
+function
+()
+{
+
+
+// And we're all done!
+
+
+  addTextToPage
+(
+"All done"
+);
+
+
+}).
+catch
+(
+function
+(
+err
+)
+{
+
+
+// Catch any error that happened along the way
+
+
+  addTextToPage
+(
+"Argh, broken: "
++
+ err
+.
+message
+);
+
+
+}).
+then
+(
+function
+()
+{
+
+
+// Always hide the spinner
+
+
+  document
+.
+querySelector
+(
+'.spinner'
+).
+style
+.
+display 
+=
+'none'
+;
+
+
+})
+
+
+```
+
+但是我们如何遍历章节的 URL 并按顺序获取呢？以下方法**行不通**：
+
+```
+
+```
+
+`forEach`不是异步的，因此我们的章节内容将按照下载的顺序显示，这就乱套了。我们这里不是非线性叙事小说，因此得解决该问题。
 
