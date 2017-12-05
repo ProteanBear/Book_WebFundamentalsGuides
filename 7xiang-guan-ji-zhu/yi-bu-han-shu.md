@@ -144,160 +144,183 @@ async function getResponseSize(url) {
 
 ### 箭头函数 {#_5}
 
-```
+```js
 // map some URLs to json-promises
-
-
-const
- jsonPromises 
-=
- urls
-.
-map
-(
-async url 
-=
->
-{
-
-
-const
- response 
-=
- await fetch
-(
-url
-);
-
-
-return
- response
-.
-json
-();
-
-
+const jsonPromises = urls.map(async url => {
+  const response = await fetch(url);
+  return response.json();
 });
-
-
 ```
 
 注：`array.map(func)`不在乎我提供给它的是不是异步函数，只把它当作一个返回 Promise 的函数来看待。 它不会等到第一个函数执行完毕就会调用第二个函数。
 
 ### 对象方法 {#_6}
 
-    const
-     storage 
-    =
-    {
+```js
+const storage = {
+  async getAvatar(name) {
+    const cache = await caches.open('avatars');
+    return cache.match(`/avatars/${name}.jpg`);
+  }
+};
 
-      async getAvatar
-    (
-    name
-    )
-    {
-
-    const
-     cache 
-    =
-     await caches
-    .
-    open
-    (
-    'avatars'
-    );
-
-    return
-     cache
-    .
-    match
-    (
-    `/avatars/${name}.jpg`
-    );
-
-    }
-
-    };
-
-
-    storage
-    .
-    getAvatar
-    (
-    'jaffathecake'
-    ).
-    then
-    (…);
-
+storage.getAvatar('jaffathecake').then(…);
+```
 
 ### 类方法 {#_7}
 
-    class
-    Storage
-    {
+```js
+class Storage {
+  constructor() {
+    this.cachePromise = caches.open('avatars');
+  }
 
-      constructor
-    ()
-    {
+  async getAvatar(name) {
+    const cache = await this.cachePromise;
+    return cache.match(`/avatars/${name}.jpg`);
+  }
+}
 
-    this
-    .
-    cachePromise 
-    =
-     caches
-    .
-    open
-    (
-    'avatars'
-    );
-
-    }
-
-
-      async getAvatar
-    (
-    name
-    )
-    {
-
-    const
-     cache 
-    =
-     await 
-    this
-    .
-    cachePromise
-    ;
-
-    return
-     cache
-    .
-    match
-    (
-    `/avatars/${name}.jpg`
-    );
-
-    }
-
-    }
-
-
-    const
-     storage 
-    =
-    new
-    Storage
-    ();
-
-    storage
-    .
-    getAvatar
-    (
-    'jaffathecake'
-    ).
-    then
-    (…);
-
+const storage = new Storage();
+storage.getAvatar('jaffathecake').then(…);
+```
 
 注：类构造函数以及 getter/settings 方法不能是异步的。
+
+## 注意！避免太过循序 {#_8}
+
+尽管您编写的是看似同步的代码，也一定不要错失并行执行的机会。
+
+```js
+async function series() {
+  await wait(500);
+  await wait(500);
+  return "done!";
+}
+```
+
+以上代码执行完毕需要 1000 毫秒，再看看这段代码：
+
+```js
+async function parallel() {
+  const wait1 = wait(500);
+  const wait2 = wait(500);
+  await wait1;
+  await wait2;
+  return "done!";
+}
+```
+
+…以上代码只需 500 毫秒就可执行完毕，因为两个 wait 是同时发生的。让我们看一个实例…
+
+### 示例：按顺序输出获取的数据 {#_9}
+
+假定我们想获取一系列网址，并尽快按正确顺序将它们记录到日志中。
+
+_深呼吸_- 以下是使用 Promise 编写的代码：
+
+```js
+function logInOrder(urls) {
+  // fetch all the URLs
+  const textPromises = urls.map(url => {
+    return fetch(url).then(response => response.text());
+  });
+
+  // log them in order
+  textPromises.reduce((chain, textPromise) => {
+    return chain.then(() => textPromise)
+      .then(text => console.log(text));
+  }, Promise.resolve());
+}
+```
+
+是的，没错，我使用`reduce`来链接 Promise 序列。我是不是_很智能_。 但这种有点_很智能_的编码还是不要为好。
+
+不过，如果使用异步函数改写以上代码，又容易让代码变得_过于循序_：
+
+不推荐的编码方式- 过于循序
+
+```js
+async function logInOrder(urls) {
+  for (const url of urls) {
+    const response = await fetch(url);
+    console.log(await response.text());
+  }
+}
+```
+
+代码简洁得多，但我的第二次获取要等到第一次获取读取完毕才能开始，以此类推。 其执行效率要比并行执行获取的 Promise 示例低得多。 幸运的是，还有一种理想的中庸之道：
+
+推荐的编码方式- 可读性强、并行效率高
+
+```js
+async function logInOrder(urls) {
+  // fetch all the URLs in parallel
+  const textPromises = urls.map(async url => {
+    const response = await fetch(url);
+    return response.text();
+  });
+
+  // log them in sequence
+  for (const textPromise of textPromises) {
+    console.log(await textPromise);
+  }
+}
+```
+
+在本例中，以并行方式获取和读取网址，但将“智能”的`reduce`部分替换成标准单调乏味但可读性强的 for 循环。
+
+## 浏览器支持与解决方法 {#_10}
+
+在写作本文时，Chrome 55 中默认情况下启用异步函数，但它们在所有主流浏览器中正处于开发阶段：
+
+* Edge - [在 14342+ 编译版本中隐藏在一个标志后](https://developer.microsoft.com/en-us/microsoft-edge/platform/status/asyncfunctions/)
+* Firefox - [开发中](https://bugzilla.mozilla.org/show_bug.cgi?id=1185106)
+* Safari - [开发中](https://bugs.webkit.org/show_bug.cgi?id=156147)
+
+### 解决方法 - 生成器 {#-}
+
+如果目标是支持生成器的浏览器（其中包括[每一个主流浏览器的最新版本](http://kangax.github.io/compat-table/es6/#test-generators)），可以通过 polyfill 使用异步函数。
+
+[Babel](https://babeljs.io/)可以为您实现此目的，[以下是通过 Babel REPL 实现的示例](https://goo.gl/0Cg1Sq)
+
+* 注意到转译的代码有多相似了吧。这一转换是[Babel es2017 预设](http://babeljs.io/docs/plugins/preset-es2017/)的一部分。
+
+注：Babel REPL 说起来很有趣。试试就知道。
+
+我建议采用转译方法，因为目标浏览器支持异步函数后，直接将其关闭即可，但如果_实在_不想使用转译器，可以亲自试用一下[Babel 的 polyfill](https://gist.github.com/jakearchibald/edbc78f73f7df4f7f3182b3c7e522d25)。
+
+原本的异步函数代码：
+
+```js
+async function slowEcho(val) {
+  await wait(1000);
+  return val;
+}
+```
+
+…如果使用[polyfill](https://gist.github.com/jakearchibald/edbc78f73f7df4f7f3182b3c7e522d25)，就需要这样编写：
+
+```js
+const slowEcho = createAsyncFunction(function*(val) {
+  yield wait(1000);
+  return val;
+});
+```
+
+请注意，需要将生成器 \(`function*`\) 传递给`createAsyncFunction`，并使用`yield`来替代`await`。 其他方面的工作方式是相同的。
+
+### 解决方法 - 再生器 {#-_1}
+
+如果目标是旧版浏览器，Babel 还可转译生成器，让您能在版本低至 IE8 的浏览器上使用异步函数。 为此，您需要[Babel 的 es2017 预设](http://babeljs.io/docs/plugins/preset-es2017/)_和_[es2015 预设](http://babeljs.io/docs/plugins/preset-es2015/)。
+
+[输出不够美观](https://goo.gl/jlXboV)，因此要注意避免发生代码膨胀。
+
+## 全面异步化！ {#_11}
+
+一旦异步函数登陆所有浏览器，就在每一个返回 Promise 的函数上尽情使用吧！ 它们不但能让代码更加整洁美观，还能确保该函数_始终_都能返回 Promise。
+
+我真正热衷于使用异步函数的历史可以[追溯到 2014 年](https://jakearchibald.com/2014/es7-async-functions/)，看到它们登陆浏览器即将成真，真是棒极了。
+
+啊呜！
 
