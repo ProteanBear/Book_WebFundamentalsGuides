@@ -132,5 +132,6 @@
     * [最佳练习](7xiang-guan-ji-zhu/71-htmlanddom-zi-ding-yi-zu-jian/zui-jia-lian-xi.md)
   * 7.2 Javascript
     * [异步函数](7xiang-guan-ji-zhu/yi-bu-han-shu.md)
+    * [Promise](7xiang-guan-ji-zhu/promise.md)
 * [附：词汇表](fu-ff1a-ci-hui-biao.md)
 
