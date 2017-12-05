@@ -507,219 +507,337 @@ function getJSON(url) {
 
 异步并不容易。如果您觉得难以着手，可尝试按照同步的方式编写代码。在本例中：
 
-```
-try
-{
+```js
+try {
+  var story = getJSONSync('story.json');
+  addHtmlToPage(story.heading);
 
+  story.chapterUrls.forEach(function(chapterUrl) {
+    var chapter = getJSONSync(chapterUrl);
+    addHtmlToPage(chapter.html);
+  });
 
-var
- story 
-=
- getJSONSync
-(
-'story.json'
-);
-
-
-  addHtmlToPage
-(
-story
-.
-heading
-);
-
-
-
-
-  story
-.
-chapterUrls
-.
-forEach
-(
-function
-(
-chapterUrl
-)
-{
-
-
-var
- chapter 
-=
- getJSONSync
-(
-chapterUrl
-);
-
-
-    addHtmlToPage
-(
-chapter
-.
-html
-);
-
-
-});
-
-
-
-
-  addTextToPage
-(
-"All done"
-);
-
-
+  addTextToPage("All done");
+}
+catch (err) {
+  addTextToPage("Argh, broken: " + err.message);
 }
 
-
-catch
-(
-err
-)
-{
-
-
-  addTextToPage
-(
-"Argh, broken: "
-+
- err
-.
-message
-);
-
-
-}
-
-
-
-
-document
-.
-querySelector
-(
-'.spinner'
-).
-style
-.
-display 
-=
-'none'
-
-
+document.querySelector('.spinner').style.display = 'none'
 ```
 
 [试一下](https://googlesamples.github.io/web-fundamentals/fundamentals/getting-started/primers/sync-example.html)
 
 这样可行（查看[代码](https://github.com/googlesamples/web-fundamentals/blob/gh-pages/fundamentals/getting-started/primers/sync-example.html)）！ 但这是同步的情况，而且在内容下载时浏览器会被锁定。要使其异步，我们使用`then()`来依次执行任务。
 
-```
-getJSON
-(
-'story.json'
-).
-then
-(
-function
-(
-story
-)
-{
+```js
+getJSON('story.json').then(function(story) {
+  addHtmlToPage(story.heading);
 
-
-  addHtmlToPage
-(
-story
-.
-heading
-);
-
-
-
-
-// TODO: for each url in story.chapterUrls, fetch 
-&
-amp; display
-
-
-}).
-then
-(
-function
-()
-{
-
-
-// And we're all done!
-
-
-  addTextToPage
-(
-"All done"
-);
-
-
-}).
-catch
-(
-function
-(
-err
-)
-{
-
-
-// Catch any error that happened along the way
-
-
-  addTextToPage
-(
-"Argh, broken: "
-+
- err
-.
-message
-);
-
-
-}).
-then
-(
-function
-()
-{
-
-
-// Always hide the spinner
-
-
-  document
-.
-querySelector
-(
-'.spinner'
-).
-style
-.
-display 
-=
-'none'
-;
-
-
+  // TODO: for each url in story.chapterUrls, fetch &amp; display
+}).then(function() {
+  // And we're all done!
+  addTextToPage("All done");
+}).catch(function(err) {
+  // Catch any error that happened along the way
+  addTextToPage("Argh, broken: " + err.message);
+}).then(function() {
+  // Always hide the spinner
+  document.querySelector('.spinner').style.display = 'none';
 })
-
-
 ```
 
 但是我们如何遍历章节的 URL 并按顺序获取呢？以下方法**行不通**：
 
-```
-
+```js
+story.chapterUrls.forEach(function(chapterUrl) {
+  // Fetch chapter
+  getJSON(chapterUrl).then(function(chapter) {
+    // and add it to the page
+    addHtmlToPage(chapter.html);
+  });
+})
 ```
 
 `forEach`不是异步的，因此我们的章节内容将按照下载的顺序显示，这就乱套了。我们这里不是非线性叙事小说，因此得解决该问题。
+
+### 创建序列 {#_10}
+
+我们想要将`chapterUrls`数组转变为 promise 序列，这可通过`then()`来实现：
+
+```js
+// Start off with a promise that always resolves
+var sequence = Promise.resolve();
+
+// Loop through our chapter urls
+story.chapterUrls.forEach(function(chapterUrl) {
+  // Add these actions to the end of the sequence
+  sequence = sequence.then(function() {
+    return getJSON(chapterUrl);
+  }).then(function(chapter) {
+    addHtmlToPage(chapter.html);
+  });
+})
+```
+
+这是我们第一次看到`Promise.resolve()`，这种 promise 可解析为您赋予的任何值。如果向其传递一个`Promise`实例，它也会将其返回（**注意：**这是对本规范的一处更改，某些实现尚未遵循）。如果将类似于 promise 的内容（带有`then()`方法）传递给它，它将创建以相同方式执行/拒绝的真正`Promise`。如果向其传递任何其他值，例如`Promise.resolve('Hello')`，它在执行时将以该值创建一个 promise。如果调用时不带任何值（如上所示），它在执行时将返回“undefined”。
+
+此外还有`Promise.reject(val)`，它创建的 promise 在拒绝时将返回赋予的值（或“undefined”）。
+
+我们可以使用[`array.reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)将上述代码整理如下：
+
+```js
+// Loop through our chapter urls
+story.chapterUrls.reduce(function(sequence, chapterUrl) {
+  // Add these actions to the end of the sequence
+  return sequence.then(function() {
+    return getJSON(chapterUrl);
+  }).then(function(chapter) {
+    addHtmlToPage(chapter.html);
+  });
+}, Promise.resolve())
+```
+
+这与之前示例的做法相同，但是不需要独立的“sequence”变量。我们的 reduce 回调针对数组中的每项内容进行调用。首次调用时，“sequence”为`Promise.resolve()`，但是对于余下的调用，“sequence”为我们从之前调用中返回的值。`array.reduce`确实非常有用，它将数组浓缩为一个简单的值（在本例中，该值为 promise）。
+
+让我们汇总起来：
+
+```js
+getJSON('story.json').then(function(story) {
+  addHtmlToPage(story.heading);
+
+  return story.chapterUrls.reduce(function(sequence, chapterUrl) {
+    // Once the last chapter's promise is done…
+    return sequence.then(function() {
+      // …fetch the next chapter
+      return getJSON(chapterUrl);
+    }).then(function(chapter) {
+      // and add it to the page
+      addHtmlToPage(chapter.html);
+    });
+  }, Promise.resolve());
+}).then(function() {
+  // And we're all done!
+  addTextToPage("All done");
+}).catch(function(err) {
+  // Catch any error that happened along the way
+  addTextToPage("Argh, broken: " + err.message);
+}).then(function() {
+  // Always hide the spinner
+  document.querySelector('.spinner').style.display = 'none';
+})
+```
+
+[试一下](https://googlesamples.github.io/web-fundamentals/fundamentals/getting-started/primers/async-example.html)
+
+这里我们已实现它（查看[代码](https://github.com/googlesamples/web-fundamentals/blob/gh-pages/fundamentals/getting-started/primers/async-example.html)），即同步版本的完全异步版本。但是我们可以做得更好。此时，我们的页面正在下载，如下所示：
+
+![](https://developers.google.com/web/fundamentals/primers/imgs/promise1.gif?hl=zh-cn)
+
+浏览器的一个优势在于可以一次下载多个内容，因此我们一章章地下载就失去了其优势。我们希望同时下载所有章节，然后在所有下载完毕后进行处理。幸运的是，API 可帮助我们实现：
+
+```js
+Promise.all(arrayOfPromises).then(function(arrayOfResults) {
+  //...
+})
+```
+
+`Promise.all`包含一组 promise，并创建一个在所有内容成功完成后执行的 promise。您将获得一组结果（即一组 promise 执行的结果），其顺序与您与传入 promise 的顺序相同。
+
+```js
+getJSON('story.json').then(function(story) {
+  addHtmlToPage(story.heading);
+
+  // Take an array of promises and wait on them all
+  return Promise.all(
+    // Map our array of chapter urls to
+    // an array of chapter json promises
+    story.chapterUrls.map(getJSON)
+  );
+}).then(function(chapters) {
+  // Now we have the chapters jsons in order! Loop through…
+  chapters.forEach(function(chapter) {
+    // …and add to the page
+    addHtmlToPage(chapter.html);
+  });
+  addTextToPage("All done");
+}).catch(function(err) {
+  // catch any error that happened so far
+  addTextToPage("Argh, broken: " + err.message);
+}).then(function() {
+  document.querySelector('.spinner').style.display = 'none';
+})
+```
+
+[试一下](https://googlesamples.github.io/web-fundamentals/fundamentals/getting-started/primers/async-all-example.html)
+
+根据连接情况，这可能比一个个依次加载要快几秒钟（查看[代码](https://github.com/googlesamples/web-fundamentals/blob/gh-pages/fundamentals/getting-started/primers/async-all-example.html)），而且代码也比我们第一次尝试的要少。章节将按任意顺序下载，但在屏幕中以正确顺序显示。
+
+![](https://developers.google.com/web/fundamentals/primers/imgs/promise2.gif?hl=zh-cn)
+
+不过，我们仍可以提升用户体验。第一章下载完后，我们可将其添加到页面。这可让用户在其他章节下载完毕前先开始阅读。第三章下载完后，我们不将其添加到页面，因为还缺少第二章。第二章下载完后，我们可添加第二章和第三章，后面章节也是如此添加。
+
+为此，我们使用 JSON 来同时获取所有章节，然后创建一个向文档中添加章节的顺序：
+
+```js
+getJSON('story.json').then(function(story) {
+  addHtmlToPage(story.heading);
+
+  // Map our array of chapter urls to
+  // an array of chapter json promises.
+  // This makes sure they all download parallel.
+  return story.chapterUrls.map(getJSON)
+    .reduce(function(sequence, chapterPromise) {
+      // Use reduce to chain the promises together,
+      // adding content to the page for each chapter
+      return sequence.then(function() {
+        // Wait for everything in the sequence so far,
+        // then wait for this chapter to arrive.
+        return chapterPromise;
+      }).then(function(chapter) {
+        addHtmlToPage(chapter.html);
+      });
+    }, Promise.resolve());
+}).then(function() {
+  addTextToPage("All done");
+}).catch(function(err) {
+  // catch any error that happened along the way
+  addTextToPage("Argh, broken: " + err.message);
+}).then(function() {
+  document.querySelector('.spinner').style.display = 'none';
+})
+```
+
+[试一下](https://googlesamples.github.io/web-fundamentals/fundamentals/getting-started/primers/async-best-example.html)
+
+我们做到了（查看[代码](https://github.com/googlesamples/web-fundamentals/blob/gh-pages/fundamentals/getting-started/primers/async-best-example.html)），两全其美！下载所有内容所花费的时间相同，但是用户可先阅读前面的内容。
+
+![](https://developers.google.com/web/fundamentals/primers/imgs/promise3.gif?hl=zh-cn)
+
+在这个小示例中，所有章节几乎同时下载完毕，但是如果一本书有更多、更长的章节，一次显示一个章节的优势便会更明显。
+
+使用[Node.js-style 回调或事件](https://gist.github.com/jakearchibald/0e652d95c07442f205ce)来执行以上示例需两倍代码，更重要的是，没那么容易实施。然而，promise 功能还不止如此，与其他 ES6 功能组合使用时，它们甚至更容易。
+
+## 友情赠送：promise 和 generator {#promise_generator}
+
+以下内容涉及一整套 ES6 新增功能，但您目前在使用 promise 编码时无需掌握它们。可将其视为即将上映的好莱坞大片电影预告。
+
+ES6 还为我们提供了[generator](http://wiki.ecmascript.org/doku.php?id=harmony:generators)，它可让某些功能在某个位置退出（类似于“return”），但之后能以相同位置和状态恢复，例如：
+
+```js
+function *addGenerator() {
+  var i = 0;
+  while (true) {
+    i += yield i;
+  }
+}
+```
+
+注意函数名称前面的星号，这表示 generator。yield 关键字是我们的返回/恢复位置。我们可按下述方式使用：
+
+```js
+var adder = addGenerator();
+adder.next().value; // 0
+adder.next(5).value; // 5
+adder.next(5).value; // 10
+adder.next(5).value; // 15
+adder.next(50).value; // 65
+```
+
+但是这对于 promise 而言意味着什么呢？您可以使用返回/恢复行为来编写异步代码，这些代码看起来像同步代码，而且实施起来也与同步代码一样简单。对各行代码的理解无需过多担心，借助于帮助程序函数，我们可使用`yield`来等待 promise 得到解决：
+
+```js
+function spawn(generatorFunc) {
+  function continuer(verb, arg) {
+    var result;
+    try {
+      result = generator[verb](arg);
+    } catch (err) {
+      return Promise.reject(err);
+    }
+    if (result.done) {
+      return result.value;
+    } else {
+      return Promise.resolve(result.value).then(onFulfilled, onRejected);
+    }
+  }
+  var generator = generatorFunc();
+  var onFulfilled = continuer.bind(continuer, "next");
+  var onRejected = continuer.bind(continuer, "throw");
+  return onFulfilled();
+}
+```
+
+…在上述示例中我几乎是[从 Q 中逐字般过来](https://github.com/kriskowal/q/blob/db9220d714b16b96a05e9a037fa44ce581715e41/q.js#L500)，并针对 JavaScript promise 进行了改写。因此，我们可以采用显示章节的最后一个最佳示例，结合新 ES6 的优势，将其转变为：
+
+```js
+spawn(function *() {
+  try {
+    // 'yield' effectively does an async wait,
+    // returning the result of the promise
+    let story = yield getJSON('story.json');
+    addHtmlToPage(story.heading);
+
+    // Map our array of chapter urls to
+    // an array of chapter json promises.
+    // This makes sure they all download parallel.
+    let chapterPromises = story.chapterUrls.map(getJSON);
+
+    for (let chapterPromise of chapterPromises) {
+      // Wait for each chapter to be ready, then add it to the page
+      let chapter = yield chapterPromise;
+      addHtmlToPage(chapter.html);
+    }
+
+    addTextToPage("All done");
+  }
+  catch (err) {
+    // try/catch just works, rejected promises are thrown here
+    addTextToPage("Argh, broken: " + err.message);
+  }
+  document.querySelector('.spinner').style.display = 'none';
+})
+```
+
+[试一下](https://googlesamples.github.io/web-fundamentals/fundamentals/getting-started/primers/async-generators-example.html)
+
+这跟之前的效用完全相同，但读起来容易多了。Chrome 和 Opera 当前支持该功能（查看[代码](https://github.com/googlesamples/web-fundamentals/blob/gh-pages/fundamentals/getting-started/primers/async-generators-example.html)），而且 Microsoft Edge 中也可使用该功能（需要在`about:flags`中打开**Enable experimental JavaScript features**设置）。在即将发布的版本中，该功能默认启用。
+
+它将纳入很多新的 ES6 元素：promise、generator、let、for-of。我们生成一个 promise 后，spawn 帮助程序将等待该 promise 来解析并返回一个终值。如果 promise 拒绝，spawn 会让 yield 语句抛出异常，我们可通过常规的 JavaScript try/catch 来捕获此异常。异步编码竟如此简单！
+
+此模式非常有用，在 ES7 中它将以[异步功能](https://jakearchibald.com/2014/es7-async-functions/)的形式提供。它几乎与上述编码示例相同，但无需使用`spawn`方法。
+
+## Promise API 参考 {#promise-api-reference}
+
+所有方法在 Chrome、Opera、Firefox、Microsoft Edge 和 Safari 中均可使用，除非另有说明。[polyfill](https://github.com/jakearchibald/ES6-Promises#readme)为所有浏览器提供以下方法。
+
+### 静态方法 {#_11}
+
+|  | 方法汇总 |
+| :--- | :--- |
+| `Promise.resolve(promise);` | 返回 promise（仅当`promise.constructor == Promise`时） |
+| `Promise.resolve(thenable);` | 从 thenable 中生成一个新 promise。thenable 是具有 \`then\(\)\` 方法的类似于 promise 的对象。 |
+| `Promise.resolve(obj);` | 在此情况下，生成一个 promise 并在执行时返回`obj`。 |
+| `Promise.reject(obj);` | 生成一个 promise 并在拒绝时返回`obj`。为保持一致和调试之目的（例如堆叠追踪），`obj`应为`instanceof Error`。 |
+| `Promise.all(array);` | 生成一个 promise，该 promise 在数组中各项执行时执行，在任意一项拒绝时拒绝。每个数组项均传递给`Promise.resolve`，因此数组可能混合了类似于 promise 的对象和其他对象。执行值是一组有序的执行值。拒绝值是第一个拒绝值。 |
+| `Promise.race(array);` | 生成一个 Promise，该 Promise 在任意项执行时执行，或在任意项拒绝时拒绝，以最先发生的为准。 |
+
+注：我对`Promise.race`的实用性表示怀疑；我更倾向于使用与之相对的`Promise.all`，它仅在所有项拒绝时才拒绝。
+
+### 构造函数 {#_12}
+
+|  | 构造函数 |
+| :--- | :--- |
+| `newPromise(function(resolve,reject) {});` | `resolve(thenable)` Promise 依据`thenable`的结果而执行/拒绝。`resolve(obj)` Promise 执行并返回`objreject(obj)` Promise 拒绝并返回`obj`。为保持一致和调试（例如堆叠追踪），obj 应为`instanceof Error`。 在构造函数回调中引发的任何错误将隐式传递给`reject()`。 |
+
+### 实例方法 {#_13}
+
+|  | 实例方法 |
+| :--- | :--- |
+| `promise.then(onFulfilled,onRejected)` | 当/如果“promise”解析，则调用`onFulfilled`。当/如果“promise”拒绝，则调用`onRejected`。 两者均可选，如果任意一个或两者都被忽略，则调用链中的下一个`onFulfilled`/`onRejected`。 两个回调都只有一个参数：执行值或拒绝原因。`then()`将返回一个新 promise，它相当于从`onFulfilled`/`onRejected`中返回、 通过`Promise.resolve`传递的值。如果在回调中引发了错误，返回的 promise 将拒绝并返回该错误。 |
+| `promise.catch(onRejected)` | 对`promise.then(undefined,onRejected)` |
+
+Anne van Kesteren、Domenic Denicola、Tom Ashworth、Remy Sharp、Addy Osmani、Arthur Evans 和 Yutaka Hirano 对本篇文章进行了校对，提出了建议并作出了修正，特此感谢！
+
+此外，[Mathias Bynens](https://mathiasbynens.be/)负责本篇文章的[更新部分](https://github.com/html5rocks/www.html5rocks.com/pull/921/files)，特此致谢。
 
