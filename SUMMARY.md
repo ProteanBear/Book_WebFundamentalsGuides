@@ -130,5 +130,7 @@
     * [自定义元素](7xiang-guan-ji-zhu/71-htmlanddom-zi-ding-yi-zu-jian/zi-ding-yi-yuan-su.md)
     * [Shadow DOM](7xiang-guan-ji-zhu/71-htmlanddom-zi-ding-yi-zu-jian/shadow-dom.md)
     * [最佳练习](7xiang-guan-ji-zhu/71-htmlanddom-zi-ding-yi-zu-jian/zui-jia-lian-xi.md)
+  * 7.2 Javascript
+    * [异步函数](7xiang-guan-ji-zhu/yi-bu-han-shu.md)
 * [附：词汇表](fu-ff1a-ci-hui-biao.md)
 
