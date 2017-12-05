@@ -400,7 +400,7 @@ class AppDrawer extends HTMLElement {
 }
 ```
 
-在示例中，我们在`<app-drawer>`属性发生变化时对`disabled`设置额外的属性。 虽然我们这里没有这样做，您也可以**使用`attributeChangedCallback`来让 JS 属性与其属性同步**。
+在示例中，我们在`<app-drawer>`属性发生变化时对`disabled`设置额外的属性。 虽然我们这里没有这样做，您也可以**使用**`attributeChangedCallback`**来让 JS 属性与其属性同步**。
 
 ## 元素升级 {#upgrades}
 
@@ -624,7 +624,7 @@ document.createElement('x-tabs') instanceof HTMLElement === true
 
 全局性`customElements`定义了处理自定义元素的有用方法。
 
-**`define(tagName, constructor, options)`**
+`define(tagName, constructor, options)`
 
 在浏览器中定义新的自定义元素。
 
@@ -636,7 +636,7 @@ customElements.define(
   'fancy-button', class extends HTMLButtonElement { ... }, {extends: 'button'});
 ```
 
-**`get(tagName)`**
+`get(tagName)`
 
 在给定有效自定义元素标记名称的情况下，返回元素的构造函数。如果没有注册元素定义，则返回`undefined`。
 
@@ -647,7 +647,7 @@ let Drawer = customElements.get('app-drawer');
 let drawer = new Drawer();
 ```
 
-**`whenDefined(tagName)`**
+`whenDefined(tagName)`
 
 如果定义了自定义元素，则返回可解析的 Promise。如果元素已定义，则立即得到解析。 如果标记名称并非有效自定义元素名称，则拒绝
 
