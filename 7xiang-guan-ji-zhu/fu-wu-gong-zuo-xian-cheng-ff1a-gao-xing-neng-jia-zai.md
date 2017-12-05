@@ -109,7 +109,7 @@ self.addEventListener('fetch', event => {
 
 This type of "passthrough" fetch handler is insidious, since everything will continue to work in your web application, but you'll end up introducing a small latency hit whenever a network request is made. There's overhead involved in starting up a service worker if it's not already running, and there's also overhead in passing the response from the service worker to the client that made the request.
 
-If your service worker doesn't contain a`fetch`handler at all, some browsers will make note of that and[not bother starting up the service worker](https://github.com/w3c/ServiceWorker/issues/718)whenever there's a network request.
+If your service worker doesn't contain a `fetch `handler at all, some browsers will make note of that and [not bother starting up the service worker](https://github.com/w3c/ServiceWorker/issues/718) whenever there's a network request.
 
 ### Use navigation preload when appropriate {#use_navigation_preload_when_appropriate}
 
